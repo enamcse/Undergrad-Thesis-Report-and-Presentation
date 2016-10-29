@@ -1,0 +1,43 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{MUMmer}
+MUMmer is a versatile and open software for comparing large scale genome. Basically based on the Suffix Tree technique that MUMmer 1.0 first introduced in 1999.
+\par 
+In 1999 the when MUMmer 1.0 development started, several other tools for large-scale  genome comparison have also been developed.Such as AVID\cite{AVID}, MGA\cite{MGA}, BLASTZ\cite{BLASTZ}, LAGAN\cite{LAGAN} and SSAHA\cite{SSAHA} etc. Most of the above mentioned  programs follow an approach which is actually anchor-based. We can divide the whole process into three phase:
+\begin{enumerate}
+	\item Firstly, Precomputation of the potential anchors.
+	\item Secondly, Calculating the colinear sequence of the non-overlapping potential anchors.
+	\item Finally, Alignment of the gaps in between the anchors .
+\end{enumerate}
+The conventional approach of computing potential anchors is to find first maximal matches of some length {\emph{l}} or longer using a generate and test approach.In the first step, all possible matches of a fixed length \emph{k} < \emph{l}, called \emph{k}-mers, are generated using general methods basically based on hashing. Then each of the generated \emph{k}-mers is checked to examine if it can be extended to a maximal exact match of length at least \emph{l}.
+\par 
+As there are several disadvantages of hashing approaches. Considering those MUMmer 1.0 was the first tool system to use Suffix Trees to find potential anchors for alignment. Suffix Trees have been studied and researched for almost three or four decades in computer science.
+\par 
+Suffix Tree is elegant data structure for representing all the substrings of a string whether it is a plain text, DNA sequence or a DNA sequence. A suffix tree for any string having a length of \emph{n} can be represented in space proportional to \emph{n}. Also fast algorithms have been developed and designed to construct a Suffix Tree of a string in time proportional to \emph{n}\cite{LINPAT, SEST}. And given the Suffix Tree of {\bf \emph{S}} and another query string {\bf \emph{Q}} of length \emph{m}, there are algorithms to calculate all unique maximal matches between {\bf \emph{S}} and {\bf \emph{Q}} in time proportional to m.
+\par 
+Above features of Suffix Tree have made it an important  data structure for large-scale genome analysis. MUMmer 1.0 first introduced Suffix Tree in such alignment technique.
+\par 
+From the development of MUMmer 1.0 in 1999 there have been three version of MUMmer upto 2016.
+\begin{enumerate}
+	\item MUMmer 1.0 \cite{MUMmer1}
+	\item MUMmer 2.0 \cite{MUMmer2}
+	\item MUMmer 3.0 \cite{MUMmer3}
+\end{enumerate}
+MUMmer 3.0 is most recent and feature added version MUMmer. Additional features like 
+\begin{enumerate}
+	\item New Java viewer, DisplayMUMS, a very new graphical output tool to make images in fig-format or portable document format(pdf). This can also show alignment of a set of contigs to a reference genome/chromosome.
+	\item New feature to find non-unique matches.
+	\item Ability to run multi-contig query against a multi-contig reference.
+\end{enumerate}
+In the algorithm level MUMmer 3.0 is a complete rewrite of the Suffix-Tree code pivoting on compact Suffix-Tree representation of \cite{RSST}. This same compact Suffix-Tree is also used in repeat analysis tool called REPuter\cite{REPuter}.
+\par
+In MUMmer 3.0 implementation was improved to a great level so that it enables MUMmer to allow sequences up to 250 Mbp on a personal computer with only a 4 gigabytes (GB) of real memory or RAM. Which comes from the cost of a slightly larger space usage per base pair. As an example anyone can construct the Suffix Tree for human chromosome 2(237.6 Mbp, the largest human chromosome) using 15.4 bytes per base pair.
+\par   
+MUMmer now requires approximately 25\% less memory than the last release of 2.1 and it also runs slightly faster.
+\par 
+If compared to the initial release in 1999, the MUMmer 3.0 system is more than two times faster and uses less than half memory. Like MUMmer 2.1, MUMmer 3.0 release also streams query read sequences  against the prebuild Suffix Tree of the target genome/reference sequence. So the sum total space requirement of MUMmer 3.0 is the size of the Suffix Tree as well as the size of the reference and the query sequences.
+\par 
+With the development of MUMmer 3.0, researcher got the capability to virtually any two genomes or sets of genomic sequences using computers commonly available todays. Bacterial genomes and small eukaryotes can be aligned on a standard personal desktop computer while larger genomes may require larger or server-class computers.
+\end{document}

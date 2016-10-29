@@ -1,0 +1,41 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces First one shows random mutations at two positions and Second one shows segment mutation.\relax }}{2}
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Picture of a lambda repressor helix-turn-helix transcription factor binding to its target location in DNA.\relax }}{6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Mapping is just indicating the clusters of a large segment of the read in reference. The red large segment is found in four places in the reference where blue large segment is found in three places.\relax }}{15}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Three possible alignment are showed based on the read mapping. The aligner does this type of alignment and picks most probable alignment based on several parameters.\relax }}{16}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Suffixes of the text "ATATACA".\relax }}{17}
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Suffixes of the text "ATATACA\$".\relax }}{17}
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Cyclic Left Shift of the First Character of \textbf {S}. \relax }}{18}
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Suffix Tree for the sequence ATATACA\$.\relax }}{19}
+\contentsline {figure}{\numberline {2.7}{\ignorespaces Suffixes of S\$ in ascending order of their starting index.\relax }}{21}
+\contentsline {figure}{\numberline {2.8}{\ignorespaces Suffixes of S\$ sorted in Lexicographical Order with their starting index.\relax }}{21}
+\contentsline {figure}{\numberline {2.9}{\ignorespaces Suffix Array of the string S, SA(S). \relax }}{21}
+\contentsline {figure}{\numberline {2.10}{\ignorespaces Cyclic Left Shift of the First Character of \textbf {S}. \relax }}{24}
+\contentsline {figure}{\numberline {2.11}{\ignorespaces LF Mapping of the string S.\relax }}{29}
+\contentsline {figure}{\numberline {2.12}{\ignorespaces Finding Suffix A of Query String P in F of LF Mapping.\relax }}{30}
+\contentsline {figure}{\numberline {2.13}{\ignorespaces Finding Suffix C of Query String P in F of LF Mapping.\relax }}{31}
+\contentsline {figure}{\numberline {2.14}{\ignorespaces Step by Step Computation of a Minimizer in a Window of X = 10 having M-mer of Length 6. The Minimizer of the Window is ATGCTC.\relax }}{32}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces There are four distinct minimizer found in the reference which are showed with four different color. Their positions are listed with triplets (position of minimizer, starting position of the consecutive covered window, ending position of the consecutive covered window). In the read, we have found three minimizer among four. Grayed portion indicates that these minimizer are not found in the reference.In Naive Minimizer approach, mapping is done based on these information.\relax }}{35}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Reference Sequence and It's Reverse Complement with Gap Insert in Every Third Base. \relax }}{38}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Mapping Two Long K-mers with Long Deletion in Read.\relax }}{40}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Mapping Two Long K-mer with Long Insertion in Read.\relax }}{41}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces A K-mer with Value $K = K_{min}$ is Picked Up from Read and Indicated Where The K-mer is Found in the Reference.\relax }}{41}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Extending One Base in $K$-mer From Read in Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM1' on page 43 undefined}, $(K+1)$-mer is Found. The Locations of This $(K+1)$-mer in the Reference is Reduced. \relax }}{43}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Extending One More Base From Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM2' on page 43 undefined}, $(K+2)$-mer is Constructed. The Locations of This $(K+2)$-mer in the Reference is Reduced And Now It is Only 3. \relax }}{43}
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Continuing the Extension, From Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM3' on page 43 undefined} $(K+3)$-mer is Created. The Count in Reference is Only One. \relax }}{43}
+\contentsline {figure}{\numberline {3.9}{\ignorespaces From Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM4' on page 44 undefined}, $(K+4)$-mer is Made By Appending One Base From Read. It has No Consequence in The Count in Reference. \relax }}{44}
+\contentsline {figure}{\numberline {3.10}{\ignorespaces One Base Extension in $(K+4)$-mer of Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM5' on page 44 undefined} Generates $(K+5)$-mer. It Shows There is No Existence of Such $(K+5)$-mer in Reference. So, the Locations Got From Figure \G@refundefinedtrue \text {\normalfont \bfseries ??}\GenericWarning { }{LaTeX Warning: Reference `fig:NaiveFM5' on page 44 undefined} Would be Considered as Final.\relax }}{44}
+\contentsline {figure}{\numberline {3.11}{\ignorespaces The whole process of gapped minimizer and BWT FM-index Merged Approach\relax }}{47}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces For Gradually Increasing the Length of K-mer in Naive FM-index Approach, Domination of Small K-mers is Clear In the Graph. Synthetic Reads has No Room in the Plot, Because It is Considered as Outliers. It Would be A Point at (10000, 100.0) as It has No Error.\relax }}{61}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Count of Final Locations and Their Percentage among the Whole Final Locations of K-mers.\relax }}{62}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces For error free data, enhanced FM-index working very fast than naive FM-index. For noisy data, the time gap is reducing.\relax }}{63}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Reference Indexing Memory Consumption Comparison between FM-index Approach and Minimap.\relax }}{64}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Percentage of Right Range Mapping Comparison Among Tools.\relax }}{67}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Percentage of Right Range Mapping Comparison Among Tools After Removing K-mer Having Length Less Than or Equal to 15.\relax }}{67}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Percentage of Right Range Mapping Comparison Among Tools After Removing K-mer Having Length Less Than or Equal to 15 For 10\% Noise In Data.\relax }}{68}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

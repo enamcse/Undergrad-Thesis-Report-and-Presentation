@@ -1,0 +1,74 @@
+\contentsline {section}{Abstract}{I}
+\contentsline {section}{Acknowledgement}{III}
+\contentsline {section}{Dedication}{IV}
+\contentsline {section}{Table of Contents}{V}
+\contentsline {section}{List of Tables}{VI}
+\contentsline {section}{List of Figures}{VII}
+\contentsline {chapter}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Background}{1}
+\contentsline {section}{\numberline {1.2}Motivation}{3}
+\contentsline {subsection}{\numberline {1.2.1}Variant Calling}{3}
+\contentsline {subsubsection}{\numberline {1.2.1.1}Mendelian Disorder}{4}
+\contentsline {subsubsection}{\numberline {1.2.1.2}Complex Diseases}{4}
+\contentsline {subsubsection}{\numberline {1.2.1.3}Somatic Mutations}{4}
+\contentsline {subsection}{\numberline {1.2.2}Gene Expression}{4}
+\contentsline {subsection}{\numberline {1.2.3}DNA Binding}{5}
+\contentsline {chapter}{\numberline {2}Background Study}{7}
+\contentsline {section}{\numberline {2.1}Literature Review}{7}
+\contentsline {subsection}{\numberline {2.1.1}Minimap}{7}
+\contentsline {subsection}{\numberline {2.1.2}NanoBLASTer}{8}
+\contentsline {subsection}{\numberline {2.1.3}BWA}{9}
+\contentsline {subsection}{\numberline {2.1.4}MUMmer}{11}
+\contentsline {subsection}{\numberline {2.1.5}Bowtie}{13}
+\contentsline {section}{\numberline {2.2}Basics}{15}
+\contentsline {subsection}{\numberline {2.2.1}Mapper and Aligner}{15}
+\contentsline {subsection}{\numberline {2.2.2}Suffix Trie}{16}
+\contentsline {subsubsection}{\numberline {2.2.2.1}Complexity Analysis of Suffix Trie}{17}
+\contentsline {subsection}{\numberline {2.2.3}Suffix Tree}{19}
+\contentsline {subsubsection}{\numberline {2.2.3.1}Analysis}{20}
+\contentsline {subsubsection}{\numberline {2.2.3.2}Real life Application of Suffix Tree}{20}
+\contentsline {subsection}{\numberline {2.2.4}Suffix Array}{20}
+\contentsline {subsubsection}{\numberline {2.2.4.1}Overview}{20}
+\contentsline {subsubsection}{\numberline {2.2.4.2}Building Suffix Array}{22}
+\contentsline {subsubsection}{\numberline {2.2.4.3}Querying in Suffix Array}{22}
+\contentsline {subsubsection}{\numberline {2.2.4.4}Complexity Analysis}{22}
+\contentsline {subsection}{\numberline {2.2.5}Burrows-Wheeler Transform (BWT)}{23}
+\contentsline {subsubsection}{\numberline {2.2.5.1}Overview}{23}
+\contentsline {subsubsection}{\numberline {2.2.5.2}Burrows-Wheeler Matrix Construction}{23}
+\contentsline {subsubsection}{\numberline {2.2.5.3}Finding BWT(S)}{26}
+\contentsline {subsubsection}{\numberline {2.2.5.4}T-Ranking}{27}
+\contentsline {subsubsection}{\numberline {2.2.5.5}LF Mapping}{27}
+\contentsline {subsubsection}{\numberline {2.2.5.6}Retrieving the string back using LF Mapping}{28}
+\contentsline {subsubsection}{\numberline {2.2.5.7}Characteristics of BWT}{29}
+\contentsline {subsection}{\numberline {2.2.6}FM-index}{29}
+\contentsline {subsection}{\numberline {2.2.7}Minimizer}{31}
+\contentsline {subsection}{\numberline {2.2.8}Gapped K-mer}{33}
+\contentsline {chapter}{\numberline {3}Methodology}{34}
+\contentsline {section}{\numberline {3.1}Naive Minimizer Approach}{34}
+\contentsline {section}{\numberline {3.2}Efficient Window Traversing Technique}{35}
+\contentsline {section}{\numberline {3.3}Gapped Minimizer}{38}
+\contentsline {section}{\numberline {3.4}Mapping Using Naive BWT FM-index}{40}
+\contentsline {section}{\numberline {3.5}Enhanced Search in BWT FM-index}{41}
+\contentsline {section}{\numberline {3.6}Gapped Minimizer and BWT FM-index Merged Approach}{45}
+\contentsline {chapter}{\numberline {4}Data Sets}{48}
+\contentsline {section}{\numberline {4.1}Data Sources}{48}
+\contentsline {section}{\numberline {4.2}Error Rate in Data}{49}
+\contentsline {chapter}{\numberline {5}Experiment and Result}{50}
+\contentsline {section}{\numberline {5.1}Implementation and Result of Naive Minimizer Approach}{50}
+\contentsline {section}{\numberline {5.2}Experiment with gapped Minimizer and result}{57}
+\contentsline {section}{\numberline {5.3}Implementation of Mapping Using Naive BWT FM-index and It's Result}{58}
+\contentsline {section}{\numberline {5.4}Performance of Enhanced BWT FM-index }{62}
+\contentsline {section}{\numberline {5.5}Experiments and Outcomes from Gapped Minimizer and BWT FM-index Merged Approach}{65}
+\contentsline {section}{\numberline {5.6}Comparison With Other Tools}{66}
+\contentsline {chapter}{\numberline {6}Conclusion}{69}
+\contentsline {section}{\numberline {6.1}Discussion}{69}
+\contentsline {section}{\numberline {6.2}Future Work}{69}
+\contentsline {subsection}{\numberline {6.2.1}API Enhancement}{69}
+\contentsline {subsection}{\numberline {6.2.2}Integration with NanoBLASTer}{70}
+\contentsline {subsection}{\numberline {6.2.3}Testing}{70}
+\contentsline {subsection}{\numberline {6.2.4}Developing New Aligner}{70}
+\contentsline {chapter}{Appendices}{71}
+\contentsline {chapter}{\numberline {A}Setting Up NanoMapper}{72}
+\contentsline {section}{\numberline {A.1}API}{72}
+\contentsline {section}{\numberline {A.2}Installing NanoMapper}{73}
+\contentsline {section}{\numberline {A.3}Running NanoMapper}{73}
