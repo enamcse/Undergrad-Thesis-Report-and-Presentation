@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Recent Works}
+
+\subsection{KCMBT}
+
+KCMBT is a tool for k-mer counting which implemented tree based algorithm. It speeds up based on multiple burst trees\cite{KMCBT}. It claimed that it has outperformed KMC 2 and presented the graph showed in Figure \ref{fig:KCMBT}. But the tools is not publicly accessible till now. As it is a conference paper, it seems to have some issues with reliability. 
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.8]{./img/KCMBT}}
+	\caption{Comparison among Jellyfish, KMC 2 and KCMBT.\cite{KCMBT}}
+	\label{fig:KCMBT}
+\end{figure}
+
+\subsection{Benchmarking Paper}
+A very recent assessment paper was published on April 4 of this year. Here, they experimented with almost all existing tools. As Jellyfish 1 could perform well till k = 31, they took this value of k. As a large value of k, they have taken k = 55. They have shown the comparison based on three important factors.
+\begin{enumerate}
+	\item Memory Usage (RAM)\ref{fig:Assess2}
+	\item Run-time\ref{fig:Assess1}
+	\item Disk I/O\ref{fig:Assess3}
+\end{enumerate}
+
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.7]{./img/AssessRunTime}}
+	\caption{Comparison among existing K-mer counting tools with respect to Run-time.\cite{reviewAllInOne}}
+	\label{fig:Assess1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.7]{./img/AssessMemory}}
+	\caption{Comparison among existing K-mer counting tools with respect to Memory Usage.\cite{reviewAllInOne}}
+	\label{fig:Assess2}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.7]{./img/AssessDiskIO}}
+	\caption{Comparison among existing K-mer counting tools with respect to Disk I/O.\cite{reviewAllInOne}}
+	\label{fig:Assess3}
+\end{figure}
+
+There experimented result almost agrees with our analysis.
+
+\end{document}

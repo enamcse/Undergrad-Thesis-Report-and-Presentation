@@ -1,0 +1,125 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Suffix Array}
+\subsubsection{Overview}
+Suffix Array\cite{suffix_array} is a common data structure which keeps the starting index of sorted suffixes of a string. The definition of suffix is an important thing here. So, a suffix is a substring or consecutive characters from a string from any position to the end of the string. An example would make the thing more clear. So, lets take an example string,
+$$S = ATTCGAGCATCAG$$
+To keep the track of ending, an end mark like \$ should be appended.
+$$S\$ = ATTCGAGCATCAG\$$$
+The suffixes are shown in Figure \ref{fig:suffixUnsort}. After sorting lexicographically, the order of the suffixes becomes like Figure \ref{fig:suffixSort}. So, Suffix Array of S would be as in Figure \ref{fig:SA}.
+\begin{figure}
+	\centering
+	\begin{BVerbatim}
+	ATTCGAGCATCAG$ --  0
+	 TTCGAGCATCAG$ --  1
+	  TCGAGCATCAG$ --  2
+	   CGAGCATCAG$ --  3
+	    GAGCATCAG$ --  4
+	     AGCATCAG$ --  5
+	      GCATCAG$ --  6
+	       CATCAG$ --  7
+	        ATCAG$ --  8
+	         TCAG$ --  9
+	          CAG$ -- 10
+	           AG$ -- 11
+	            G$ -- 12
+	             $ -- 13
+	\end{BVerbatim}
+	\caption{Suffixes of S\$ in ascending order of their starting index.}
+	\label{fig:suffixUnsort}
+\end{figure}
+
+\begin{figure}
+	\centering
+\begin{BVerbatim}
+$              -- 13
+AG$            -- 11
+AGCATCAG$      --  5
+ATCAG$         --  8
+ATTCGAGCATCAG$ --  0
+CAG$           -- 10
+CATCAG$        --  7
+CGAGCATCAG$    --  3
+G$             -- 12
+GAGCATCAG$     --  4
+GCATCAG$       --  6
+TCAG$          --  9
+TCGAGCATCAG$   --  2
+TTCGAGCATCAG$  --  1
+\end{BVerbatim}
+	\caption{Suffixes of S\$ sorted in Lexicographical Order with their starting index.}
+	\label{fig:suffixSort}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+	text centered]
+	\tikzstyle{line} = [draw, -latex']
+	\begin{tikzpicture}[auto]
+	
+	\node [rectangle,minimum width=2cm](lab) {$S\$ =$};
+	\node [block, anchor=west] (Val1_1) at (lab.east) {A};
+	\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+	\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+	\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+	\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+	\node [block, anchor=west] (Val1_6) at (Val1_5.east) {A};
+	\node [block, anchor=west] (Val1_7) at (Val1_6.east) {G};
+	\node [block, anchor=west] (Val1_8) at (Val1_7.east) {C};
+	\node [block, anchor=west] (Val1_9) at (Val1_8.east) {A};
+	\node [block, anchor=west] (Val1_10) at (Val1_9.east) {T};
+	\node [block, anchor=west] (Val1_11) at (Val1_10.east) {C};
+	\node [block, anchor=west] (Val1_12) at (Val1_11.east) {A};
+	\node [block, anchor=west] (Val1_13) at (Val1_12.east) {G};
+	\node [block, anchor=west] (Val1_14) at (Val1_13.east) {\$};
+	%suffix array
+	\node [rectangle,below of=lab,minimum width=2cm](lab2) {$SA(S) =$};
+	\node [block, anchor=west] (Val2_1) at (lab2.east) {14};
+	\node [block, anchor=west] (Val2_2) at (Val2_1.east) {12};
+	\node [block, anchor=west] (Val2_3) at (Val2_2.east) {6};
+	\node [block, anchor=west] (Val2_4) at (Val2_3.east) {9};
+	\node [block, anchor=west] (Val2_5) at (Val2_4.east) {0};
+	\node [block, anchor=west] (Val2_6) at (Val2_5.east) {11};
+	\node [block, anchor=west] (Val2_7) at (Val2_6.east) {8};
+	\node [block, anchor=west] (Val2_8) at (Val2_7.east) {4};
+	\node [block, anchor=west] (Val2_9) at (Val2_8.east) {13};
+	\node [block, anchor=west] (Val2_10) at (Val2_9.east) {5};
+	\node [block, anchor=west] (Val2_11) at (Val2_10.east) {7};
+	\node [block, anchor=west] (Val2_12) at (Val2_11.east) {10};
+	\node [block, anchor=west] (Val2_13) at (Val2_12.east) {3};
+	\node [block, anchor=west] (Val2_14) at (Val2_13.east) {2};
+	
+	
+	\end{tikzpicture}
+	\caption{Suffix Array of the string S, SA(S). } \label{fig:SA}
+\end{figure}
+
+\subsubsection{Building Suffix Array}
+An approach of building suffix array could have the following steps.
+\begin{itemize}
+	\item Bulild a Suffix Tree as mentioned in the previous section.
+	\item Do a Depth First Traversal storing indexes at leaves.
+\end{itemize}
+The memory complexity could be reduced following several approaches\cite{SA_building} with LCP array where the Suffix Tree should not be constructed. However,  traversing $n$ nodes need $O(n)$ time. So, it is the building time complexity of Suffix Array.
+
+\subsubsection{Querying in Suffix Array}
+A binary search algorithm\cite{binaru_search} could be used to query in the suffix array. Say we want to have the answer of following two questions where $P = AT$ would be used as query string.
+\begin{itemize}
+	\item Does P occurs in S?
+	\item How many times does P occur in S?
+\end{itemize}
+To answer the first question, we would do a binary search. if any match found, then it occurs, otherwise not. Have a look at Figure \ref{fig:suffixSort} and see, it occurs. But here is steps in binary search.
+\begin{itemize}
+	\item left = 0, right = 13, mid = 6. SA[6] = 8.
+	\item S[8] = 'A', S[8+1] = 'T' which matches with P[0] and P[1]. So, T is a substring of S.
+\end{itemize}
+
+However, to answer the second question, we should have two binary search. One would find left bound and other would find right bound. The answer is just the difference between them.
+\subsubsection{Complexity Analysis}
+The memory complexity of Suffix Array is $O(n)$ where $n$ is the length of the string. To index human genome it takes 12GB\cite{bowtie} where MUMmer\cite{MUMmer3} takes 47GB using Suffix Tree.
+
+In case of searching, both of the answers in the querying section takes$O(m log_2(n))$ where, $n$ and $m$ are the length of the main string and query string respectively. Here, $m$ for comparison and $log_2(n)$ for binary search. But it could be reduced to $O(m +  log_2(n))$ in practice using LCP\cite{SA_LCP,SA_LCP1,SA_LCP2,SA_LCP3} and other techniques\cite{SA_LCP4,SA_LCP5,SA_LCP6}.
+\end{document}

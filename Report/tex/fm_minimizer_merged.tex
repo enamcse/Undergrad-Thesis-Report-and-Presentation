@@ -1,0 +1,50 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+	\section{Gapped Minimizer and BWT FM-index Merged Approach}
+	After introducing plenty of options by minimizer and reducing error by gap, there still remains a lot of options to decide the actual position of the reads. On the other hand, BWT FM-index returns more reliable answer. So, merging all of these techniques may give a good result. This approach includes noise handling, double checking of a K-mer and gives a long reliable K-mer to map the read successfully. 
+	
+	Figure \ref{fig:mergedProcess} illustrates the whole procedure. At first the minimizers from the whole reference  is indexed running a window using \verb|unordered_map| in C++ which has $O(1)$complexity. Every minimizer should have gap in it's third base. In fact, every third base of the the reference genome is also replaced by a gap. The ultimate benefit of adding gap is it reduces the number of mismatches due to noise. Say, two K-mers are \verb|GATTCATGCTTGCA| and \verb|GATACTTGATCGAA| for $K=14$ where 5 mismatches exist. Inserting gap in every third base makes them \verb|GA_TC_TG_TT_CA| and \verb|GA_AC_TG_TC_AA| which has now 3 mismatches. So, inserting gap reduce mismatches.
+	
+	\begin{figure}
+		\centering
+		\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+		text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+		\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+		text width=5em, text centered, text width=8cm, rounded corners, minimum height=4em]
+		\tikzstyle{line} = [draw, -latex']
+		\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+		minimum height=2em]
+		
+		\begin{tikzpicture}[node distance = 2cm, auto]
+			\node [block, minimum width=7cm] (init) {Index the whole reference taking gapped minimizer running a window};
+			\node [block,below of=init] (fm) {Make an FM-index of the whole reference};
+			\node [block,text width=3cm,below of=fm] (read) {Take a read};
+			\node [block,text width=5cm,below of=read] (kmer) {Take a K-mer from the read};
+			\node [block,text width=2cm,below of=kmer] (gap) {Insert Gap};
+			\node [block,text width=6cm,below of=gap] (map) {Search the K-mer in the index of minimizers of refrence};
+			\node [decision, below of=map] (decide) {Does the K-mer found in the index?};
+			\node [block,node distance = 5cm, text width=2cm, left of=decide] (deny) {Shift the postion by one};
+			\node [block,text width=5cm,node distance = 3cm, below of=decide] (store) {Search for the longest non-zero occurance of the K-mer in FM-index and store it};
+			\node [block,node distance=5cm,text width=3cm, right of=store] (adjust) {Adjust the index accordingly};
+			\node [block, text width=6cm,below of=store] (stop) {Stop when no K-mer is remaining};
+			
+			\path [line] (init) -- (fm);
+			\path [line] (fm) -- (read);
+			\path [line] (read) -- (kmer);
+			\path [line] (kmer) -- (gap);
+			\path [line] (gap) -- (map);
+			\path [line] (map) -- (decide);
+			\path [line] (decide) --node {Yes} (store);
+			\path [line] (decide) --node {No} (deny);
+			\path [line] (deny) |- (kmer);
+			\path [line] (store) -- (adjust);
+			\path [line] (adjust) |- (kmer);
+			\path [line, dashed] (store) -- (stop);
+		\end{tikzpicture}
+		\caption{The whole process of gapped minimizer and BWT FM-index Merged Approach}
+		\label{fig:mergedProcess}
+	\end{figure}
+	In the next step, the gapped reference is indexed using BWT FM-index. Then, the processing of reads are started. A window of K runs over each read. At first, gaps are inserted in every third base of K-mer. Then it is searched in the index of minimizer first. If it occurs as minimizer in the reference, then one base is extended every time and is searched in the FM-index. The last non-zero occurrences are taken in to account. These locations of occurrences are added in the result set and the window of K jumps there after. In this way, all reads are processed.
+\end{document}

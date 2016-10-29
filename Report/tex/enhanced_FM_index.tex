@@ -1,0 +1,39 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Enhanced Search in BWT FM-index}
+For every K in the loop of BWT FM-index \cite{fm_index} in Algorithm \ref{alg:inc_K_FM} at line number  \ref{alg:inc_K_FM:9} the \emph{CountFM()} function is calling. And for every call, this function has to iterate over all previous K with the help of a function \emph{BackwardSearch()}. It makes the complexity $O(K^2)$. Though it does not matter that more as the value of K would not be very large, but we are basically looking for larger K to map larger K-mers. So, it should be handled carefully. Therefore, if the read has less noise, it would increase the complexity which would be shown in the case of error free \emph{Synthetic} Reads.
+
+The \emph{BackwardSearch()} and the \emph{CountFM()} function would be modified in a way so that the work of the discussed loop could be handle efficiently inside those functions and the loop would disappear from the function of mapping. Algorithm \ref{alg:enhanced_FM} shows it in a better way.
+
+\begin{algorithm}
+	\caption{Mapping K-mers of Variable Lengths of a Read to Reference Using Enhanced FM-index }
+	\label{alg:enhanced_FM}
+	\begin{algorithmic}[1]
+		\Require $K_{min}$ is the minimum length of K or the starting length of K, $fmIndex$ is the indexed reverse of reference which is basically a data structure, $read$ is the particular Read Sequence. 
+		\Ensure A list of K-mers with their position in read and reference.
+		\Function{MapWithEnhancedFM}{$fmIndex, read, minK$}
+		\Local{$i, j, readLength,  i_{adjusted}, locations, retList$}
+		\Let{$readLength$}{|read|} 
+		\Comment{|s| means length of the string s}
+		\Let{retList}{$null$} 
+		\For{$i \leftarrow 0$ \textbf{to} $readLength - K_{min}$}
+		\Let{i_{adjusted}}{readLength - i - 1}
+
+		\Let{locations}{MyLocateFM(fmIndex, read, i_{adjusted}, \&j)}
+		
+		\Comment{\parbox[t]{.85\linewidth}}{\emph{MyLocateFM} function takes four parameters, an \emph{FM-index} data structure, a string, a starting position and an address to send back the K-mer length. It returns the locations of occurrences of the longest non-zero occurrences K-mer in the data structure from the position i}
+		\If{|$locations$| \textbf{not equal to \emph{0}}}
+		\State{\textbf{Append} $(read[i: i+j], i, locations)$ to $retList$}
+		\Comment{\parbox[t]{.3\linewidth}}{$s[a:b]$ means substring consisting of characters from index a(inclusive) to index b(exclusive) of string s}
+		\Let{i}{i + j - 1} 
+		\EndIf
+		\EndFor
+		\State\Return{retList}
+		\EndFunction
+		
+	\end{algorithmic}
+\end{algorithm}
+
+\end{document}

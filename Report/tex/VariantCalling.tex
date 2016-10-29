@@ -1,0 +1,32 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+	\subsection{Variant Calling}
+		By definition, a variant call is an outcome that there is a nucleotide difference vs. some reference at any given particular position in an individual genome sequence or transcriptome. 
+		\par
+		Variant calling is a very significant procedure for WES or WGS sequencing and for some experiments also for RNA sequence. There are two major classes of variant \cite{varan}
+		\begin{enumerate}
+			\item Single Nucleotide variant (SNV)
+			\item Structural Variant
+		\end{enumerate}
+		Application of those variant can be grouped in to three common scenarios for human geneticist using NGS data.\cite{varan}
+		\begin{enumerate}
+			\item Identification of causative genes in Mendelian disorders (germline mutations)
+			\item Identification of candidate genes in complex diseases
+			\item Identification of constitutional mutations as well as driver and passenger genes in cancer
+	\end{enumerate}
+	\subsubsection{Mendelian Disorder}
+		This relates any disorders or phenotype complication that is resulted by hereditary genetic pass. This study design is only suitable for familial diseases where an proper amount of sample size if available for analysis.
+	\subsubsection{Complex Diseases}
+		Finding out candidate genes in complex diseases had been a challenging task for decades. As genetic research of complex phenotypes are based on either 'common disease-common variant' or 'common disease - rare variant' hypothesis\cite{varan}, identification of candidate genes for both common variant and rare variant is important for the remedy and further study on any disease.
+	\subsubsection{Somatic Mutations}
+		Somatic mutation detection is very important for many cancer remedy. Even by detecting the mutations, tailored drug can be given to the affected patients tailored to the genetic makeup of their tumor or cancer cell.
+		
+\bigskip
+\noindent
+	Behind all these detections lies a common technique which require Alignment. Alignment is a process where read sequences are aligned against a reference genome sequence of any particular species. But any alignment first needed the reads to be mapped to the reference sequence. Means for each read there must be a position in the reference from where it was taken from.
+	\par
+	For long reads which is prone to higher error rates like 15\% to 20\% and a average length of 10K base pare this read mapping becomes challenging actually. Our goal was to develop a mapping tool for long read which consume a feasible amount of time and gives a good mapping of the reads. 
+		  
+\end{document}

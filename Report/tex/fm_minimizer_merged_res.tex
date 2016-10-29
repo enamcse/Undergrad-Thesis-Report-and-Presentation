@@ -1,0 +1,48 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Experiments and Outcomes from Gapped Minimizer and BWT FM-index Merged Approach}
+	The summary of the processing is represented in figure \ref{tab:ref} and \ref{tab:read}. From figure \ref{tab:ref}, it is clear that memory consumption of the indexing is very low. Further comparison would be shown on the basis of this state of the tool which would be described in the next section.
+\begin{table}[]
+	\centering
+	\caption{Summary of Processing Reference genome}
+	\label{tab:ref}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{No} & \textbf{\begin{tabular}[c]{@{}c@{}}Reference\\ Name\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Reference\\ Length\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}\# of\\ Minimizer\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Indexing \\ Time(Mini.)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Indexing\\ Time(FM)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Memory\\ Usage(MB)\end{tabular}} \\ \hline \hline
+		1 & E.Coli & 4639211 & 682246 & 0.46 & \textit{1.76} & 1.67 \\ \hline
+		2 & Synthetic & 493290 & 12225 & 0.04 & \textit{0.16} & 0.18 \\ \hline
+	\end{tabular}
+\end{table}
+\begin{table}[]
+	\centering
+	\caption{Summary of Processing Read Sequences}
+	\label{tab:read}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\textbf{No} & \textbf{Name of Data Set} & \textbf{\begin{tabular}[c]{@{}c@{}}Total Length\\ of Reads\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Time to Map\\ (Naive)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Time to Map\\ (Enhanced)\end{tabular}} \\ \hline \hline
+		1 & \begin{tabular}[c]{@{}c@{}}20K Simulated\\ Reads\end{tabular} & 118335765 & \textit{\begin{tabular}[c]{@{}c@{}}19538.9\\ (5h 26m)\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}17051\\ (4h 44m)\end{tabular}} \\ \hline
+		2 & 25K Reads & 216906558 & \textit{\begin{tabular}[c]{@{}c@{}}9408.94\\ (2h 37m)\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}9869.78\\ (2h 45m)\end{tabular}} \\ \hline
+		3 & Synthetic Reads & 500000 & \textit{\begin{tabular}[c]{@{}c@{}}3867.97\\ (1h 5m)\end{tabular}} & \textit{0.90} \\ \hline
+	\end{tabular}
+\end{table}
+	Below is the snippet from output file:
+\begin{verbatim}
+> Ecoli_2753889_aligned_2957_R_26_6442_7
+1 - 15 : AC_AG_TT_AG_GC_ (3)
+3139245 2334798 378942 
+16 - 30 : CT_TG_GA_TG_TT_ (2)
+1812027 2551200 
+...
+\end{verbatim}
+The fist line is the name of the read with necessary information. Every pair of lines till the next read name contains mapping information. Till now, the formatting of the information is like below:
+\begin{verbatim}
+<start_index_in_read> - <end_index_in_read> : <K-mer_with_gap> (<count_of_K-mer_in_reference>)
+<space_separated_locations_of_K-mer_in_reference>
+\end{verbatim}
+
+Every statement  in '<>' briefly describes what would be there. The number of integers in location would be same as the count of K-mer in reference.
+
+
+\end{document}

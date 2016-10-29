@@ -1,0 +1,111 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Gapped Minimizer}
+ Why we use gapped minimizer is discussed in background study as gapped k-mer. Here we first take the reference genome and then insert gap or '\_' in every third base of the reference sequence. Then we start building (W, K) - minimizer index from the reference sequence. Here (W,K)-minimizer notation means lexicographically minimum of all consecutive {\bf \emph{K}} mers from a {\bf \emph{W}} mer. 
+ \par 
+ \begin{figure}
+ 	\centering
+ 	\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+ 	text centered]
+ 	\tikzstyle{line} = [draw, -latex']
+ 	\begin{tikzpicture}[auto, node distance = 5mm]
+ 	%Reference
+ 	\node [rectangle, minimum width=2cm](lab) at (4,0) {Reference};
+ 	\node [block, below of=lab] (Val1_2) at (3.5,0) {T};
+ 	\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+ 	\node [block, anchor=west, fill=black!20] (Val1_4) at (Val1_3.east) {C};
+ 	\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+ 	\node [block, anchor=west] (Val1_6) at (Val1_5.east) {A};
+ 	\node [block, anchor=west, fill=black!20] (Val1_7) at (Val1_6.east) {G};
+ 	\node [block, anchor=west] (Val1_8) at (Val1_7.east) {C};
+ 	\node [block, anchor=west] (Val1_9) at (Val1_8.east) {A};
+ 	\node [block, anchor=west, fill=black!20] (Val1_10) at (Val1_9.east) {T};
+ 	\node [block, anchor=west] (Val1_11) at (Val1_10.east) {C};
+ 	\node [block, anchor=west] (Val1_12) at (Val1_11.east) {A};
+ 	\node [block, anchor=west, fill=black!20] (Val1_13) at (Val1_12.east) {G};
+ 	\node [block, anchor=west] (Val1_14) at (Val1_13.east) {T};
+ 	\node [block, anchor=west] (Val1_15) at (Val1_14.east) {A};
+
+ 	\node [rectangle, minimum width=2cm](lab2) at (5.06,-2.6) {Gap Inserted Reference};
+ 	%second line
+	 \node [block] (Val2_2) at (3.5,-2) {T};
+	 \node [block, anchor=west] (Val2_3) at (Val2_2.east) {T};
+	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_4) at (Val2_3.east) {\_};
+	 \node [block, anchor=west] (Val2_5) at (Val2_4.east) {G};
+	 \node [block, anchor=west] (Val2_6) at (Val2_5.east) {A};
+	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_7) at (Val2_6.east) {\_};
+	 \node [block, anchor=west] (Val2_8) at (Val2_7.east) {C};
+	 \node [block, anchor=west] (Val2_9) at (Val2_8.east) {A};
+	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_10) at (Val2_9.east) {\_};
+	 \node [block, anchor=west] (Val2_11) at (Val2_10.east) {C};
+	 \node [block, anchor=west] (Val2_12) at (Val2_11.east) {A};
+	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_13) at (Val2_12.east) {\_};
+	 \node [block, anchor=west] (Val2_14) at (Val2_13.east) {T};
+	 \node [block, anchor=west] (Val2_15) at (Val2_14.east) {A};
+ 	
+ 	 %arrows
+ 	 \draw[line width=1mm,color=black!70,->] (4.57,-0.8) -- (4.57,-1.7);
+ 	 \draw[line width=1mm,color=black!70,->] (6.32,-0.8) -- (6.32,-1.7);
+ 	 \draw[line width=1mm,color=black!70,->] (8,-0.8) -- (8,-1.7);
+ 	 \draw[line width=1mm,color=black!70,->] (9.75,-0.8) -- (9.75,-1.7);
+ 	 
+ 	 %Reverse Complement of Reference
+ 	 \node [rectangle, minimum width=2cm](lab3) at (5.9,-4) {Reverse Complement of Reference};
+ 	 \node [block, below of=lab3] (Val3_2) at (3.5,-4) {T};
+ 	 \node [block, anchor=west] (Val1_3) at (Val3_2.east) {A};
+ 	 \node [block, anchor=west, fill=black!20] (Val1_4) at (Val1_3.east) {C};
+ 	 \node [block, anchor=west] (Val1_5) at (Val1_4.east) {T};
+ 	 \node [block, anchor=west] (Val1_6) at (Val1_5.east) {G};
+ 	 \node [block, anchor=west, fill=black!20] (Val1_7) at (Val1_6.east) {A};
+ 	 \node [block, anchor=west] (Val1_8) at (Val1_7.east) {T};
+ 	 \node [block, anchor=west] (Val1_9) at (Val1_8.east) {G};
+ 	 \node [block, anchor=west, fill=black!20] (Val1_10) at (Val1_9.east) {C};
+ 	 \node [block, anchor=west] (Val1_11) at (Val1_10.east) {T};
+ 	 \node [block, anchor=west] (Val1_12) at (Val1_11.east) {C};
+ 	 \node [block, anchor=west, fill=black!20] (Val1_13) at (Val1_12.east) {G};
+ 	 \node [block, anchor=west] (Val1_14) at (Val1_13.east) {A};
+ 	 \node [block, anchor=west] (Val1_15) at (Val1_14.east) {A};
+ 	 %gapped reverse complement
+ 	 \node [rectangle, minimum width=2cm](lab4) at (6.95,-6.6) {Gap Inserted Reverse Complement of Reference};
+ 	 
+ 	 \node [block] (Val4_2) at (3.5,-6) {T};
+ 	 \node [block, anchor=west] (Val2_3) at (Val4_2.east) {A};
+ 	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_4) at (Val2_3.east) {\_};
+ 	 \node [block, anchor=west] (Val2_5) at (Val2_4.east) {T};
+ 	 \node [block, anchor=west] (Val2_6) at (Val2_5.east) {G};
+ 	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_7) at (Val2_6.east) {\_};
+ 	 \node [block, anchor=west] (Val2_8) at (Val2_7.east) {T};
+ 	 \node [block, anchor=west] (Val2_9) at (Val2_8.east) {G};
+ 	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_10) at (Val2_9.east) {\_};
+ 	 \node [block, anchor=west] (Val2_11) at (Val2_10.east) {T};
+ 	 \node [block, anchor=west] (Val2_12) at (Val2_11.east) {C};
+ 	 \node [block, anchor=west, fill=black!20,minimum height=5.2mm, minimum width=5mm] (Val2_13) at (Val2_12.east) {\_};
+ 	 \node [block, anchor=west] (Val2_14) at (Val2_13.east) {A};
+ 	 \node [block, anchor=west] (Val2_15) at (Val2_14.east) {A};
+ 	 
+ 	 %arrows
+ 	 \draw[line width=1mm,color=black!70,->] (4.57,-4.8) -- (4.57,-5.7);
+ 	 \draw[line width=1mm,color=black!70,->] (6.32,-4.8) -- (6.32,-5.7);
+ 	 \draw[line width=1mm,color=black!70,->] (8,-4.8) -- (8,-5.7);
+ 	 \draw[line width=1mm,color=black!70,->] (9.75,-4.8) -- (9.75,-5.7);
+ 	 \draw[ dashed,line width=1mm,->] (Val1_2.west) to[bend right=40] (Val3_2.west);
+ 	\end{tikzpicture}
+ 	\caption{Reference Sequence and It's Reverse Complement with Gap Insert in Every Third Base. } \label{fig:gappedMinimizer}
+ \end{figure}
+ After the first W window's minimizer if found we map the minimizer with a vector. Here the vector represents the position of that minimizer and the total length covered by the minimizer. Then  {\bf \emph{W+1}}th base is considered then for that window if a new minimizer is found we map this new minimizer in the same style. If no new minimizer is found that means the minimizer of the previous window is also a minimizer the current window then we just keep updating the end position that is covered by the minimizer. So ultimately we just iterating the sequence and for each right base we check if that window does not have a new minimizer then we update the covering end position of the last found minimizer and go on. When a new minimizer is found we just update the map with the previous minimizer with it's {starting position, covering start position, covering end position} triplet.
+ \par 
+ Finding the minimizer in every {\bf \emph{W}} window for the whole sequence takes almost linear time as shown in \ref{alg:mini_algo} and building the unordered map of minimizer with it's {starting position, covering start position, covering end position} triplet vector takes also constant time for every update and query in the map. So our method of building the whole index for gapped-minimizer for a reference sequence is almost linear in time.
+ \par 
+ For simulated data set we know which read is in forward direction and which read is in reverse direction. So for reads that are extracted from the reverse direction with compliment we need another such index of the reverse compliment of the reference sequence. For this we just take the reference first insert gap or '\_' in it like afore mentioned method and then reverse complement the reference. Then again build another separate unordered map of minimizer with it's {starting position, covering start position, covering end position} triplet vector.
+ \par 
+ From some previous study \cite{miniref} we find that a {\bf \emph{(W, K)}}-minimizer occurs on average every {\bf \emph{(W+1)/2}} bases through a sequence. If minimizers occurred exactly every {\bf \emph{(W+1)/2}} bases, then every substring of length {\bf \emph{K +(W -1)/2}} would have a minimizer.
+ As a result, if two strings have a {\bf \emph{K +W/2}}-mer in common, then they are most likely to have a {\bf \emph{(W,K)}}-minimizer in common. So for the reference we expect to have at least one new minimizer in every {\bf \emph{2*W}} window of the sequence.
+ \par 
+ Our another assumption is, for any read (from simulated data) number of total {\bf \emph{K}}-mer of the read found in the reference as a minimizer will be at greater or equal than the total number of minimizer found in the location of reference from  where the read was extracted from.
+ \par 
+ For this purpose we process some of the aligned read in such manner. We searched for every {\bf \emph{K}}-mer of the read in the reference whether it occurs as a minimizer or not. If the read is in forward direction we searched it in the map generated for forward reference and if the read is in reverse direction we searched it in the map generated for reverse compliment of the reference. Then we counted how many {\bf \emph{K}}-mer hits we get in the reference as minimizers. We also extracted the information of how many minimizers occurred in the section from the minimizer was taken from.
+ \par 
+ In the next chapter we will see that these two assumptions are met accordingly.
+\end{document}

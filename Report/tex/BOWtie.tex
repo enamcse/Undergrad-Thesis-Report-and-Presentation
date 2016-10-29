@@ -1,0 +1,37 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Bowtie}
+Like other programs mentioned above Bowtie\cite{bowtie} is a very fast and space-efficient that means also memory effective alignment tool mainly for aligning short reads of DNA sequences to a large reference genome sequence. Bowtie basically adopts the main Burrows-Wheeler techniques and then extending with a smart quality-aware backtracking method allowing mismatches in the sequences. Bowtie using the parallel threading power can also achieve better and greater alignment speed.
+\par 
+The underlying technique of Bowtie is basically Burrows-Wheeler index based on full-text minute-space(FM) index\cite{fm_index}. This technique has a very little memory footprint. Like only 1.3 gigabytes (GB) for the human genome. As a result Bowtie is allowed to run a typical and widely available desktop computer with 2 GB of RAM or real memory.
+\par 
+The conventional method for searching in an FM index is like the exact-matching algorithm of Ferragina and Manzini\cite{fm_index}. But Bowtie does not exactly adopts this algorithm because exact matching does not for the errors caused by sequencing or any sort of genetic variations. Bowtie introduce two smart extensions that make the method applicable to sort read alignments. These extensions are
+\begin{enumerate}
+	\item A smart quality-aware backtracking algorithms enabling mismatches and also favors high-quality alignments.
+	\item Double Indexing, another smart way to avoid the excessive use of backtracking.
+\end{enumerate}
+Bowtie follows a similar technique to Maq's\cite{mapLi} where it is allowed to a small number of mismatches within each read.
+\par 
+The main Bowtie algorithm consists of three main phases. These three phases alternate between  using the forward and mirror indices that is describe in \cite{bowtie}.
+\begin{enumerate}
+	\item First phase uses the mirror index and invokes the aligner to locate alignments for cases 1 and 2.
+	\item Second phase finds partial alignments with mismatches only in the hi-half.
+	\item Third and final phase attempts to extend those partial alignments into the full alignments.
+\end{enumerate}
+After the deployment of Bowtie in 2009 for the first time Bowtie has gone through several minor releases. After that Bowtie2 has come in 2012\cite{bowtie2} with several improvements.Bowtie generally fail to align reads having gaps and therefore miss important information. Whereas Bowtie2 extends the FM-index based technique of Bowtie to perform gapped alignment  basically dividing the algorithm broadly in two steps.
+\begin{enumerate}
+	\item The initial step is defined as ungapped seed-finding stage which takes the full advantage from
+	the speed and space efficiency of the FM-index.
+	\item The second stage is defined by gapped extension stage which basically uses dynamic programming technique and takes the full advantages of parallel processing of modern processors.
+\end{enumerate}
+For every read Bowtie2 works in basic four steps. They are
+\begin{enumerate}
+	\item In first step, Bowtie2 gleans seed substring from the read and its reverse complement.
+	\item In the second step,the gleaned substrings are aligned to a reference genome sequence in a ungapped style using FM-index.
+	\item In third step, Those seed alignments are prioritized and their positions in the reference genome sequence are then extracted from the FM-index.
+	\item In fourth and final step, seeds are extended into full alignments.
+\end{enumerate}
+Bowtie2 came mainly to address the limitation of Bowtie of failing in cases of reads containing gaps. Though Bowtie2 addresses it well another tool BWA-SW\cite{BWA_long} came first addressing the same problem. Several comparisons can be found here \cite{bowtie2} that in many cases Bowtie2 works better than BWA-SW.
+\end{document}

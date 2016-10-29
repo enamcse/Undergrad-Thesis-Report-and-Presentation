@@ -1,0 +1,101 @@
+\usepackage{standalone}
+
+% line spacing and paragragh spacing
+\usepackage{setspace}
+\renewcommand{\baselinestretch}{1.5} 
+\usepackage{indentfirst}
+\usepackage{dirtytalk}
+\usepackage{multicol}
+\usepackage{caption} 
+\captionsetup[table]{skip=10pt}
+\usepackage[table,xcdraw]{xcolor}
+
+%verbatim centering
+\usepackage{fancyvrb}
+% bibliography
+\usepackage[noadjust]{cite}
+\bibliographystyle{IEEEtran}
+
+% to set page spacing
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={150mm,217mm},
+	left=30mm,
+	top=40mm,
+}
+% to set page numbering spacing
+\setlength{\footskip}{28mm}
+\setcounter{secnumdepth}{5}
+
+% Time New Roman Font
+\usepackage[T1]{fontenc}
+\usepackage{newtxtext,newtxmath}
+
+% to set the dateformat
+\usepackage[en-GB]{datetime2}
+\DTMlangsetup[en-GB]{ord=raise,monthyearsep={,\space}}
+
+%to make appendix
+\usepackage[toc,page]{appendix}
+
+%to wrap table data
+%\usepackage{tabulary}
+
+%Tikz
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{pgfplots}
+
+% centering chapter
+\usepackage{sectsty}
+\chapterfont{\centering}
+
+% to center horizontally
+\usepackage{array} 
+
+% to add algorithm
+\usepackage{dsfont}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode,float}
+\usepackage{mathtools}
+\newcommand{\minbox}[2]{%
+	\mathmakebox[\ifdim#1<\width\width\else#1\fi]{#2}}
+\newcommand{\Let}[2]{\State $ \minbox{1em}{#1} \gets #2 $}
+\algnewcommand{\Local}{\State\textbf{Local Variables: }}
+\makeatletter
+\newenvironment{breakablealgorithm}
+{% \begin{breakablealgorithm}
+	\begin{center}
+		\refstepcounter{algorithm}% New algorithm
+		\hrule height.8pt depth0pt \kern2pt% \@fs@pre for \@fs@ruled
+		\renewcommand{\caption}[2][\relax]{% Make a new \caption
+			{\raggedright\textbf{\ALG@name~\thealgorithm} ##2\par}%
+			\ifx\relax##1\relax % #1 is \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+			\else % #1 is not \relax
+			\addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+			\fi
+			\kern2pt\hrule\kern2pt
+		}
+	}{% \end{breakablealgorithm}
+	\kern2pt\hrule\relax% \@fs@post for \@fs@ruled
+\end{center}
+}
+\makeatother
+%\usepackage[noend]{algpseudocode}
+%\usepackage[algcompatible]{algpseudocode}
+%\floatname{algorithm}{Procedure}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+%to manipulate foot note page number
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+	\fancyhf{} % clear all header and footer fields
+	\fancyfoot[C]{-\thepage-} % except the center
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}}
+\pagestyle{plain}

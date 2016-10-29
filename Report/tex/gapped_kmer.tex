@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Gapped K-mer}
+The data is noisy. The more the error, the more the mismatch. For the sake of allowing mismatch, we have to treat them as match while running matching algorithms. So, every mismatch which was actually match, but gone mismatch due to error, should be converted to same character. We introduce '\_' as the common character. We would convert every third base of a K-mer to a '\_'. So, we are considering 1/3 mismatch as match which is around 33\%. But our data may have around 20\% error. We took some more in percentage for reducing the biasness of the assumption to occur the mismatch at every third position.
+
+Lets see an example. We have a K-mer of length 14:
+\begin{verbatim}
+ACTTGATCTAGTAC
+\end{verbatim}
+If we assume 25\% error, we would replace every fourth base as '\_' like below.
+\begin{verbatim}
+ACT_GAT_TAG_AC
+\end{verbatim}
+But in our case, we extended the error rate to 33\% and to take the effect, we would replace every third base instead of fourth. 
+\begin{verbatim}
+AC_TG_TC_AG_AC
+\end{verbatim}
+As in both read and reference the character became same, it would match in both. 
+\end{document}

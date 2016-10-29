@@ -1,0 +1,175 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+
+\section{Our Study}
+To work with noisy data, we took some steps to get the appropriate solution. We have learned about Min-hashing and Locality Sensitive Hashing (LSH).
+
+\subsection{Minhashing}
+Minhashing is a technique which is mainly used in document similarity\cite{bookOfMinhash}. It actually calculates how much two documents are similar. It uses Characteristics Matrix. The matrix is mainly sparse matrix. In case of products and customers, rows can be interpreted as products and columns can be interpreted as customers.
+\subsection{Working Procedure}
+At first it shuffles rows. Then it traverse top to bottom considering any two columns. It stop traversing when at least one 1 meets. Now, there could be three cases:
+\begin{description}
+	\item[Type X:] Row has 1 in both columns.
+	\item[Type Y:] Row has 1 in one of the columns and 0 in the other.
+	\item[Type Z:] Row has 0 in both columns.
+\end{description}
+	So, the probability of getting Type X before Type Y is $\frac{x}{x+y}$. On the other hand, the Jaccard Similarity between these two are also same. We can now conclude that, probability shows that finding similarity in this way actually gives the Jaccard Similarity of two columns.
+
+Though the working procedure is so simple, but it is almost impossible to permute rows of a large matrix. So, instead of picking n rand permutations of rows, we use n randomly chosen hash function. 
+
+Now, we have to build up a signature matrix. Lets take Table \ref{tab:minhash} as an example.
+\begin{table}[ht]
+\centering
+\caption{Hash function with hash values for each rows.}
+\label{tab:minhash}
+\begin{tabular}{c||c|c|c|c||c|c}
+
+$Row$ & $S_1$ & $S_2$ & $S_3$ & $S_4$ &  x + 1 mod 5 &  3x + 1 mod 5 \\ \hline 
+0   & 1  & 0  & 0  & 1  & 1  & 1  \\
+1   & 0  & 0  & 1  & 0  & 2  & 4  \\
+2   & 0  & 1  & 0  & 1  & 3  & 2  \\
+3   & 1  & 0  & 1  & 1  & 4  & 0  \\
+4   & 0  & 0  & 1  & 0  & 0  & 3 
+\end{tabular}
+\end{table}
+
+At the beginning, the signature matrix is initialized with all $\infty$ elements. So, the Table \ref{tab:minhash1} shows the prior condition of updating.
+\begin{table}[ht]
+\centering
+\caption{Signature Matrix at the very beginning}
+\label{tab:minhash1}
+\begin{tabular}{l||l|l|l|l}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  $\infty$  &  $\infty$  &  $\infty$  & $\infty$   \\
+$h_2$ & $\infty$   & $\infty$   & $\infty$   & $\infty$  
+\end{tabular}
+\end{table}
+
+If we perform update for row 0, then only $S_1$ and $S_4$. So, after updating, the signature matrix would be like Table \ref{tab:minhash2}.
+\begin{table}[ht]
+\centering
+\caption{Signature Matrix After Processing Row 0.}
+\label{tab:minhash2}
+\begin{tabular}{c||c|c|c|c}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  \cellcolor[HTML]{FD6864}1  &  $\infty$  &  $\infty$  & \cellcolor[HTML]{FD6864}1   \\
+$h_2$ & \cellcolor[HTML]{FD6864}1   & $\infty$   & $\infty$   & \cellcolor[HTML]{FD6864}1 
+\end{tabular}
+\end{table}
+
+While processing row 1, only column $S_3$ would be affected as only this value of Row 1 contains 1. Thus, the matrix shape is given in Table \ref{tab:minhash3}.
+\begin{table}[ht]
+\centering
+\caption{Signature Matrix After Processing Row 1.}
+\label{tab:minhash3}
+\begin{tabular}{c||c|c|c|c}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  1  &  $\infty$  &  \cellcolor[HTML]{FD6864}2  & 1   \\
+$h_2$ & 1   & $\infty$   & \cellcolor[HTML]{FD6864}4   & 1 
+\end{tabular}
+\end{table}
+
+Processing row 2 would compare the values in $S_2$ and $S_4$. Only $S_2$ would be updated as $S_4$ has already in minimum value. Table \ref{tab:minhash4} shows the situation.
+\begin{table}[ht]
+\centering
+\caption{Signature Matrix After Processing Row 2.}
+\label{tab:minhash4}
+\begin{tabular}{c||c|c|c|c}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  1  &  \cellcolor[HTML]{FD6864}3  &  2  & \cellcolor[HTML]{FFCE93}1   \\
+$h_2$ & 1   & \cellcolor[HTML]{FD6864}2   & 4   & \cellcolor[HTML]{FFCE93}1 
+\end{tabular}
+\end{table}
+
+Row 3 does the operation on every column except $S_2$. Table \ref{tab:minhash5} illustrates the updating phenomenon.
+\begin{table}[ht]
+\centering
+\caption{Signature Matrix After Processing Row 3.}
+\label{tab:minhash5}
+\begin{tabular}{c||c|c|c|c}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  \cellcolor[HTML]{FFCE93}1  &  3  &  \cellcolor[HTML]{FFCE93}2  & \cellcolor[HTML]{FFCE93}1   \\
+$h_2$ & \cellcolor[HTML]{FD6864}0   & 2   & \cellcolor[HTML]{FD6864}0   & \cellcolor[HTML]{FD6864}0 
+\end{tabular}
+\end{table}
+
+After processing the last row the final scenario would be like Table \ref{tab:minhash6}.
+\begin{table}[ht]
+\centering
+\caption{Final Signature Matrix.}
+\label{tab:minhash6}
+\begin{tabular}{c||c|c|c|c}
+   & $S_1$ & $S_2$ & $S_3$ & $S_4$ \\ \hline 
+$h_1$ &  1  &  3  &  \cellcolor[HTML]{FD6864}0  & 1   \\
+$h_2$ & 0   & 2   & \cellcolor[HTML]{FFCE93}0   & 0 
+\end{tabular}
+\end{table}
+
+After the generation of the final signature matrix, to find Jaccard Similarity, we would check the similar hash values. How much similar two columns would be determined on the similarity of the hash values of 
+\subsection{Locality Sensitive Hashing (LSH)}
+Locality Sensitive Hashing is almost similar to min-hashing technique. But in the part of hashing, it uses several band. The use of band made them more easy to implement.
+\section{Implementation Works}
+
+\subsection{Experiment With Existing Tools}
+Jellyfish and KMC 2 are the most used two k-mer counting tools in recent days. But both are platform dependent. Though Jellyfish is implemented in C++, but they have taken some advantages of unix-based thread system. So, it must be run in Linux or Ubuntu.
+
+On the other hand, KMC 2 is written in Visual C++ which has no option to run without having windows platform.
+
+\subsubsection{Data Used}
+We have tested these two on several fastq and fasta file. We observed the results for hand made short sequence file. Finally, we ran both tools on the noisy sequence reads of \emph{E. Coli} as well as on its reference genome provided by Ruhul Amin Sajib Sir. We wrote batch files in both for windows and linux to run for different k-mer ranging from 1 to 15. In supplementary data section, we provided the batch files and some C++ codes.
+
+Jellyfish does not give sorted data. Our C++ program of sorting crashes while data size is too large. Due to recent declaration of bash command facilities in windows command line, we could perform the sorting operation easily.
+
+\subsubsection{Execution Time Comparison}
+KMC 2 provides the calculation time while reporting the execution. So, we used those time reads in our data directly. In case of Jellyfish, we used bash time calculation commands which measures time in seconds. Figure \ref{fig:TC1} shows how time graph changes with respect to the value of k for Jellyfish and KMC 2. 
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.6]{./img/RunTimeOnNoisyData}}
+	\caption{K-mer Counting Time Comparison between Jellyfish and KMC 2 for different values of K on Noisy Data Reads of \emph{E.Coli}.}
+	\label{fig:TC1}
+\end{figure}
+Figure \ref{fig:TC2} shows the same thing while ran it on reference sequence. As the length of the reference is too short and we have some issues with exact time calculation in case of Jellyfish, it does not shows the actual result for the first few values.
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.6]{./img/RunTimeOnReference}}
+	\caption{K-mer Counting Time Comparison between Jellyfish and KMC 2 for different values of K on Reference data of \emph{E.Coli}.}
+	\label{fig:TC2}
+\end{figure}
+
+\subsubsection{Discussion on Execution Time}
+Surprisingly we have noticed two things.
+\begin{description}
+	\item[Firstly], Jellyfish is taking unusual execution time for k = 7. Afterward, the execution time decreases as the value of k increases till k = 12.
+	\item[Secondly], Though KMC 2 gives better performance in all other cases, for k = 13, it crashes after a few seconds of starting execution. We tried increasing the facility of memory consumption, but though it crashes. We have contacted with the authors of KMC 2 and informed about the problem. They are now working on it.
+\end{description}
+
+\subsubsection{Data Representation Issues}
+To visualize the k-mer counts, we have to represent a k-mer as a number. As we are dealing with at most k = 15, we could allot two bits for every character of the string. For k=15, the substring would take at most 30 bits which is in range of integer data type.
+
+But the problem is, the total number of different k-mers are more than $10^8$. We used python code to visualize the data. But it could not generate the graph as the data set is huge.
+
+To analyze the data, we took first 1000 k-mer counts from all sorted k-mers. For K = 11, Figure \ref{fig:TC3} shows the graph for noisy data. We showed k-mer number 1000 to 2000 in the graph. The highest value of the k-mer count here is around 600 hundred. Figure \ref{fig:TC4} shows the frequency in reference genome. It covers approximately 1200 numbers and the highest value is around 30. So, it seems it is a 20X data.
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.3]{./img/reads_k_11_h_10M_T_50_formatted_sorted_1000}}
+	\caption{K-mer frequencies of first 1000 K-mer in sorted list for k = 11 on Noisy data of \emph{E.Coli}.}
+	\label{fig:TC3}
+\end{figure}
+\begin{figure}[ht]
+	\centering
+		\fbox{\includegraphics[scale=0.3]{./img/reference_k_11_h_10M_T_50_formatted_sorted_1000}}
+	\caption{K-mer frequencies of first 1000 K-mer in sorted list for k = 11 on Reference data of \emph{E.Coli}.}
+	\label{fig:TC4}
+\end{figure}
+
+\subsubsection{System Configuration}
+\begin{description}
+	\item[OS:] Windows 10, Ubuntu 14.04 LTS.
+	\item[RAM:] 6 GB.
+	\item[Disk:] 512 GB.
+	\item[Data:] 672 MB Noisy Reads, 4.6 MB reference sequence of \emph{E.Coli}.
+\end{description}
+
+\end{document}

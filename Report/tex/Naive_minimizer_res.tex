@@ -1,0 +1,167 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Implementation and Result of Naive Minimizer Approach}
+KMC2\cite{KMC2}, is a K-mer counting tool which inspired us first to think about minimizer. Later, we have found that Minimap\cite{minimap} also used this technique with some enhancement in their tool. However, we could achieve almost same result in perspective of time and memory. Rather ours giving better mapping result for error free data. Here is the snippet from the result summary:
+\subsubsection*{Error Free Data}
+\begin{verbatim}
+Reference length : 493290
+Read length : 10000
+Index Building time :2.39232 seconds
+Total : 2285 and 1 minimizers not found in Reference.
+(Max) 16830 to 26830 : 2298
+(Min) 204709 to 214709 : 4
+Total : 1581 minimizers only present inside 16807 to 26806
+Total : 701 minimizers present both in and out of 16807 to 26806
+Total : 2 minimizers present out of 16807 to 26806
+Total Processing Time with Index Building: 2.43698 seconds
+\end{verbatim}
+There was some bug in our code that produced some extra minimizers than expected. However, we found the bug when we shifted to the efficient one. So, we did not wasted time to see find the exact time and minimizer. Here, the summary showed for only one read and the whole synthetic reference genome of length around 0.5 million. 
+
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is 493290.
+	\item The length of the only read is 10K.
+	\item It took 2.4 seconds to build the index called map in C/C++.
+	\item There are total 2285 minimizers in the read. Among them only one is not found in the reference.
+	\item 1581 minimizers (69.2\%) are found only in the range from where the read is cut.
+	\item 701 minimizers (30.7\%) are found both inside and outside of the corresponding range in reference.
+	\item 2 minimizers (<0.001\%) are found only outside but not inside of the above range.
+	\item 2298 and 4 are maximum and minimum count of minimizers in a 10K length window in reference. 
+\end{itemize}
+\paragraph*{Discussion}
+From the above statistics, it is clear that the read could be mapped to the actual position in the reference as the majority of the minimizers found in the right range. Note that, here no error is inserted. Read data is same as in the reference.
+5% error
+
+\subsubsection*{With 5\% Error}
+\begin{verbatim}
+--------------------------------------------------------
+Reference length : 493290
+Read length : 10000
+3.12671
+Total : 2264 and 638 minimizers not found in Reference.
+Total : 1015 minimizers only present inside 16807 to 26806
+Total : 443 minimizers present both in and out of 16807 to 26806
+Total : 168 minimizers present out of 16807 to 26806
+3.14251
+---------------------------------------------------------
+\end{verbatim}
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is around 0.5M.
+	\item The length of the only read is 10K.
+	\item It took 3.13 seconds to build the index called map in C/C++.
+	\item There are total 2264 minimizers in the read. Among them 638 (28.2\%) is not found in the reference.
+	\item 1015 minimizers (62.4\%) are found only in the range from where the read is cut.
+	\item 443 minimizers (27.2\%) are found both inside and outside of the corresponding range in reference.
+	\item 168 minimizers (10.33\%) are found only outside but not inside of the above range.
+\end{itemize}
+\paragraph*{Discussion}
+It showed that about one third minimizer gone from the list of minimizer in the reference. Those which are found still have the majority inside the range. So, the read is still could be mapped in the reference in an approximate position with a limited sensitivity.
+\subsubsection*{With 10\% Error}
+\begin{verbatim}
+--------------------------------------------------------
+Reference length : 493290
+Read length : 10000
+3.07263
+(In the range ) Min Diff is : 1 and Max Diff is : 115
+(Out of the range ) Min Diff is : 1 and Max Diff is : 3983
+Total : 2252 and 1040 minimizers not found in Reference.
+Total : 640 minimizers only present inside 16807 to 26806
+Total : 309 minimizers present both in and out of 16807 to 26806
+Total : 263 minimizers present out of 16807 to 26806
+3.07353
+--------------------------------------------------------
+\end{verbatim}
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is around 0.5M.
+	\item The length of the only read is 10K.
+	\item It took 3.07 seconds to build the index called map in C/C++.
+	\item There are total 2252 minimizers in the read. Among them 1040 (46.2\%) is not found in the reference.
+	\item 640 minimizers (52.8\%) are found only in the range from where the read is cut.
+	\item 309 minimizers (25.5\%) are found both inside and outside of the corresponding range in reference.
+	\item 263 minimizers (21.7\%) are found only outside but not inside of the above range.
+	\item 2298 and 4 are maximum and minimum count of minimizers in a 10K length window in reference.
+	\item Minimum Difference among the corresponding windows of founded minimizers is 1 in both inside and outside the cutting region of read in the reference.
+	\item  Minimum Distance among the corresponding windows of founded minimizers is 115 in the range and 3983 outside the range.
+\end{itemize}
+\paragraph*{Discussion}
+Almost half of the total minimizers in the read disappeared from the reference. Those are found in the range is dominant till now. Approximation may vary in certain range. But it might turn to worse result in case of the long genome like human genome.
+\subsubsection*{With 15\% Error}
+\begin{verbatim}
+--------------------------------------------------------
+Reference length : 493290
+Read length : 10000
+3.11769
+Total : 2267 and 1281 minimizers not found in Reference.
+Total : 467 minimizers only present inside 16807 to 26806
+Total : 214 minimizers present both in and out of 16807 to 26806
+Total : 305 minimizers present out of 16807 to 26806
+3.13327
+--------------------------------------------------------
+\end{verbatim}
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is around 0.5M.
+	\item The length of the only read is 10K.
+	\item It took 3.11 seconds to build the index called map in C/C++.
+	\item There are total 2267 minimizers in the read. Among them 1281 (56.5\%) is not found in the reference.
+	\item 467 minimizers (47.4\%) are found only in the range from where the read is cut.
+	\item 214 minimizers (21.7\%) are found both inside and outside of the corresponding range in reference.
+	\item 305 minimizers (30.9\%) are found only outside but not inside of the above range.
+\end{itemize}
+\paragraph*{Discussion}
+As one third of the founded minimizers are outside the range, the approximation would be quite tough and rough. Here, no minimizer has extra priority. So, things are becoming tougher. 
+\subsubsection*{With 20\% Error}
+\begin{verbatim}
+--------------------------------------------------------
+Reference length : 493290
+Read length : 10000
+3.13197
+Total : 2249 and 1467 minimizers not found in Reference.
+Total : 311 minimizers only present inside 16807 to 26806
+Total : 140 minimizers present both in and out of 16807 to 26806
+Total : 331 minimizers present out of 16807 to 26806
+3.14647
+--------------------------------------------------------
+\end{verbatim}
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is around 0.5M.
+	\item The length of the only read is 10K.
+	\item It took 3.13 seconds to build the index called map in C/C++.
+	\item There are total 2249 minimizers in the read. Among them 1467 (65.2\%) is not found in the reference.
+	\item 311 minimizers (39.8\%) are found only in the range from where the read is cut.
+	\item 140 minimizers (17.9\%) are found both inside and outside of the corresponding range in reference.
+	\item 331 minimizers (42.3\%) are found only outside but not inside of the above range.
+\end{itemize}
+\paragraph*{Discussion}
+All domination are almost gone. The approximate mapping might lead in wrong direction.
+\subsubsection*{With 45\% Error}
+\begin{verbatim}
+--------------------------------------------------------
+Reference length : 493290
+Read length : 10000
+3.12898
+Total : 2146 and 2141 minimizers not found in Reference.
+Total : 2 minimizers only present inside 16807 to 26806
+Total : 2 minimizers present both in and out of 16807 to 26806
+Total : 1 minimizers present out of 16807 to 26806
+3.20383
+--------------------------------------------------------
+\end{verbatim}
+\paragraph*{Data Interpretation}
+\begin{itemize}
+	\item The length of the reference is around 0.5M.
+	\item The length of the only read is 10K.
+	\item It took 3.13 seconds to build the index called map in C/C++.
+	\item There are total 2146 minimizers in the read. Among them 2141 (99.8\%) is not found in the reference.
+	\item 2 minimizers (40\%) found only in the range from where the read is cut.
+	\item 2 minimizers (40\%) found both inside and outside of the corresponding range in reference.
+	\item 1 minimizers (20\%) found only outside but not inside of the above range.
+\end{itemize}
+\paragraph*{Discussion}
+Approximation is almost impossible. If minimizers remain in the reference but in bad with a bad placement, then some biasness might work. But almost no data is found. So, the condition reached it's worst.
+\end{document}

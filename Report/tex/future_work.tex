@@ -1,0 +1,22 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Future Work}
+\subsection{API Enhancement}
+Our used API for FM-index, SDSL-lite\cite{SDSL}, is not that fast comparing with other existing tools. This implementation is a general purpose API. So, tweaking for only four letter in the alphabet could be done.
+\subsection{Integration with NanoBLASTer}
+One of the drawbacks of NanoBLASTer\cite{nanoBLAST} is it could not recognize long insertion or long deletion. So, it is the best implementation to enhance the performance and reduce the problem. As the input output format and parameters in functions disagree between NanoBLASTer and this tool, the integration has not been done. With some effort, it could be done easily to get output in greater extent.
+\subsection{Testing}
+As our datasets and resources were limited we could not test the tool vastly. Massive testing would build a set of statistics based on which some heuristics might be added to get better output. 
+\subsection{Developing New Aligner}
+Based on this mapping tool, a new aligner tool could be made for some specific project. This may take lot of time to build such one, but it would be effective if built once. Enhanced alignment like Gotoh\cite{gotoh,gotoh1} and other could be developed and run parallel to this which may give a good output.
+\par 
+Currently this tool generates some  
+\begin{verbatim}
+<variable_length_kmer>  <pos_in_read>  <pos_in_reference>
+\end{verbatim}
+triplets for each read. Then to map the whole read to the desired segment of the reference we would need to cluster the triplets such that the maximum cluster will be formed with the maximum count of minimizers that maintains order both in read and reference.
+\par 
+Many type of clustering technique has been used in different tools. For example Miniasm-Minimap\cite{minimap} uses a clustering technique that is inspired from Hough Transformation\cite{HT1, HT2} a feature extraction technique used in Digital image processing, MUMmer uses their own clustering technique.	  
+\end{document}

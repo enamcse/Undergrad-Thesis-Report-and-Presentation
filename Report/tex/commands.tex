@@ -1,0 +1,45 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+	\chapter{Setting Up NanoMapper}
+	A unix based operating system is needed to run this program. Please ensure that the system fulfilled the following requirements:
+	\begin{itemize}
+		\item The latest version of of C++ compiler. C++11 standard or later. clang version must be 3.2 or higher.
+		\item A cmake build system.
+		\item The operating system must be a 64-bit machine.
+		\item zlib library installed.
+	\end{itemize}
+	\section{API}
+	The SDSL-lite\cite{SDSL} API is used to implement FM-index. It could be installed by the following command lines in the terminal:
+	\begin{verbatim}
+	    $ git clone https://github.com/simongog/sdsl-lite.git
+	    $ cd sdsl-lite
+	    $ ./install.sh
+	\end{verbatim}
+	The API could be un-installed after working by the following command having same directory in the terminal:
+	\begin{verbatim}
+	    $ ./uninstall.sh
+	\end{verbatim}
+	\section{Installing NanoMapper}
+	The following commands in terminal would let you install NanoMapper in your PC:
+	\begin{verbatim}
+	    $ git clone https://github.com/enamcse/NanoMapper.git && cd NanoMapper
+	    $ g++ -o NanoMapper -std=c++11 -O3 -DNDEBUG -I ~/include -L ~/lib 
+	      Main_minimizer.cpp -lz -lsdsl -ldivsufsort -ldivsufsort64
+	\end{verbatim}
+	\section{Running NanoMapper}
+	The NanoMapper could be run on your PC giving the parameters like below:
+	\begin{verbatim}
+	    $ ./NanoMapper <path_of_reference_file> <path_of_reads_file> 
+	      <K-mer_length> <window_length> 
+	      <output_file_path_for_naive_fm_index_approach>
+	      <output_file_path_for_enhanced_fm_index_approach>
+	\end{verbatim}
+	Example:
+	\begin{verbatim}
+	    $ ./NanoMapper synthetic_reference_seq.fasta gen_seq.fasta 14 24 
+	      loc_syn_out.txt loc_syn_out_1.txt
+	\end{verbatim}
+	Note that, each command should be given in one line. Here, it is shown in multi-line for simplicity.
+\end{document}

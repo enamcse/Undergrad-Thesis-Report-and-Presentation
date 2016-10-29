@@ -1,0 +1,129 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Minimizer}
+Minimizer is a special concept that indicates the lexicographically smallest M-mer among K-mers and their reverse complement in a window of X\cite{minimap,KMC2,minimizer1,minimizer2,minimizer3}. Figure \ref{fig:minimizer} shows how to calculate a minimizer from a window. Here, the first window is \verb|ATTCGAGCAT|, second one is \verb|TTCGAGCATC|, third one is \verb|TCGAGCATCA|, fourth and fifth windows are \verb|CGAGCATCAG| and \verb|GAGCATCAGT| respectively. The demonstration shows the first window only. For other windows, same calculation would be happaned. It is shown that the minimizer from first window is \verb|ATGCTC|. In the second window, the minimizer would be switched to \verb|AGCATC|.
+
+
+\begin{figure}
+	\centering
+	\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+	text centered]
+	\tikzstyle{line} = [draw, -latex']
+	\begin{tikzpicture}[auto]
+	\definecolor{brightpink}{rgb}{1.0, 0.0, 0.5}
+	%first string
+	\node [block, anchor=west] (Val1_1) at(0,0) {A};
+	\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+	\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+	\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+	\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+	\node [block, anchor=west] (Val1_6) at (Val1_5.east) {A};
+	\node [block, anchor=west] (Val1_7) at (Val1_6.east) {G};
+	\node [block, anchor=west] (Val1_8) at (Val1_7.east) {C};
+	\node [block, anchor=west] (Val1_9) at (Val1_8.east) {A};
+	\node [block, anchor=west] (Val1_10) at (Val1_9.east) {T};
+	\node [block, anchor=west] (Val1_11) at (Val1_10.east) {C};
+	\node [block, anchor=west] (Val1_12) at (Val1_11.east) {A};
+	\node [block, anchor=west] (Val1_13) at (Val1_12.east) {G};
+	\node [block, anchor=west] (Val1_14) at (Val1_13.east) {T};
+
+	
+	%second string
+	\node [block, anchor=west] (Val2_1) at(0,-2) {A};
+	\node [block, anchor=west] (Val2_2) at (Val2_1.east) {T};
+	\node [block, anchor=west] (Val2_3) at (Val2_2.east) {T};
+	\node [block, anchor=west] (Val2_4) at (Val2_3.east) {C};
+	\node [block, anchor=west] (Val2_5) at (Val2_4.east) {G};
+	\node [block, anchor=west] (Val2_6) at (Val2_5.east) {A};
+	\node [block, anchor=west] (Val2_7) at (Val2_6.east) {G};
+	\node [block, anchor=west] (Val2_8) at (Val2_7.east) {C};
+	\node [block, anchor=west] (Val2_9) at (Val2_8.east) {A};
+	\node [block, anchor=west] (Val2_10) at (Val2_9.east) {T};
+	
+	%third string
+	\node [block, anchor=west] (Val3_1) at(0,-4) {A};
+	\node [block, anchor=west] (Val3_2) at (Val3_1.east) {T};
+	\node [block, anchor=west] (Val3_3) at (Val3_2.east) {T};
+	\node [block, anchor=west] (Val3_4) at (Val3_3.east) {C};
+	\node [block, anchor=west] (Val3_5) at (Val3_4.east) {G};
+	\node [block, anchor=west] (Val3_6) at (Val3_5.east) {A};
+	\node[rectangle](refer) at (8.8,-3.8) {Reverse Complement: \textcolor{blue}{TCGAAT}};
+	\node[rectangle](refer) at (8,-4.2) {Minimizer : \textcolor{brightpink}{ATTCGA}};
+	
+	%fourth string
+	\node [block, anchor=west] (Val4_1) at(0.54,-6) {T};
+	\node [block, anchor=west] (Val4_2) at (Val4_1.east) {T};
+	\node [block, anchor=west] (Val4_3) at (Val4_2.east) {C};
+	\node [block, anchor=west] (Val4_4) at (Val4_3.east) {G};
+	\node [block, anchor=west] (Val4_5) at (Val4_4.east) {A};
+	\node [block, anchor=west] (Val4_6) at (Val4_5.east) {G};
+	\node[rectangle](refer) at (8.8,-5.8) {Reverse Complement: \textcolor{blue}{CTCGAA}};
+	\node[rectangle](refer) at (8,-6.2) {Minimizer : \textcolor{brightpink}{ATTCGA}};
+	
+	%fifth string
+	\node [block, anchor=west] (Val5_1) at(1.1,-8) {T};
+	\node [block, anchor=west] (Val5_2) at (Val5_1.east) {C};
+	\node [block, anchor=west] (Val5_3) at (Val5_2.east) {G};
+	\node [block, anchor=west] (Val5_4) at (Val5_3.east) {A};
+	\node [block, anchor=west] (Val5_5) at (Val5_4.east) {G};
+	\node [block, anchor=west] (Val5_6) at (Val5_5.east) {C};
+	\node[rectangle](refer) at (8.8,-7.8) {Reverse Complement: \textcolor{blue}{GCTCGA}};
+	\node[rectangle](refer) at (8,-8.2) {Minimizer : \textcolor{brightpink}{ATTCGA}};
+	
+	
+	%sixth string
+	\node [block, anchor=west] (Val6_1) at(1.65,-10) {C};
+	\node [block, anchor=west] (Val6_2) at (Val6_1.east) {G};
+	\node [block, anchor=west] (Val6_3) at (Val6_2.east) {A};
+	\node [block, anchor=west] (Val6_4) at (Val6_3.east) {G};
+	\node [block, anchor=west] (Val6_5) at (Val6_4.east) {C};
+	\node [block, anchor=west] (Val6_6) at (Val6_5.east) {A};
+	\node[rectangle](refer) at (8.8,-9.8) {Reverse Complement: \textcolor{blue}{TGCTCG}};
+	\node[rectangle](refer) at (8,-10.2) {Minimizer : \textcolor{brightpink}{ATTCGA}};
+	
+	
+	%seventh string
+	\node [block, anchor=west] (Val7_1) at(2.15,-12) {G};
+	\node [block, anchor=west] (Val7_2) at (Val7_1.east) {A};
+	\node [block, anchor=west] (Val7_3) at (Val7_2.east) {G};
+	\node [block, anchor=west] (Val7_4) at (Val7_3.east) {C};
+	\node [block, anchor=west] (Val7_5) at (Val7_4.east) {A};
+	\node [block, anchor=west] (Val7_6) at (Val7_5.east) {T};
+	\node[rectangle](refer) at (8.8,-11.8) {Reverse Complement: \textcolor{blue}{ATGCTC}};
+	\node[rectangle](refer) at (8,-12.2) {Minimizer : \textcolor{brightpink}{ATGCTC}};
+	
+	%label
+	\node[rectangle](refer) at (0.8,0.5) {Reference};
+	\node[rectangle](refer) at (2.8,-1.5) {Window of Length X};
+	\node[rectangle](refer) at (1.7,-3.5) {First M-mer};
+	\node[rectangle](refer) at (2.25,-5.5) {Second M-mer};
+	\node[rectangle](refer) at (2.75,-7.5) {Third M-mer};
+	\node[rectangle](refer) at (3.15,-9.5) {Fourth M-mer};
+	\node[rectangle](refer) at (3.6,-11.5) {Fifth M-mer};
+	%lines
+	\draw[line width=1mm,color=green!50!black] (0.051,-0.3) -- (0.051,-1.7);
+	\draw[line width=1mm,color=green!50!black] (5.6,-0.3) -- (5.6,-1.7);
+	
+	\draw[line width=1mm,color=green!50!black] (0.051,-2.3) -- (0.051,-3.7);
+	\draw[line width=1mm,color=green!50!black] (3.35,-2.3) -- (3.35,-3.7);
+	
+	\draw[line width=1mm,color=green!50!black] (0.6,-4.3) -- (0.6,-5.7);
+	\draw[line width=1mm,color=green!50!black, loosely dashed, ->] (3.7,-2.3) -- (3.7,-5.7);
+	
+	\draw[line width=1mm,color=green!50!black] (1.15,-6.3) -- (1.15,-7.67);
+	\draw[line width=1mm,color=green!50!black, loosely dashed, ->] (4.25,-2.3) -- (4.25,-7.7);
+	
+	\draw[line width=1mm,color=green!50!black] (1.7,-8.3) -- (1.7,-9.67);
+	\draw[line width=1mm,color=green!50!black, loosely dashed, ->] (4.8,-2.3) -- (4.8,-9.7);
+	
+	\draw[line width=1mm,color=green!50!black] (2.2,-10.3) -- (2.2,-11.67);
+	\draw[line width=1mm,color=green!50!black, loosely dashed, ->] (5.35,-2.3) -- (5.35,-11.7);
+	%\draw[line width=1.5mm,->] (Val1_8.south) to (Val2_8.north);
+	\end{tikzpicture}
+	\caption{Step by Step Computation of a Minimizer in a Window of X = 10 having M-mer of Length 6. The Minimizer of the Window is ATGCTC.} \label{fig:minimizer}
+\end{figure}
+The definition of minimizer could be changed for the necessity. In the last version of our tool, we have considered only the M-mers excluding their reverse complement as we are not working both of the directions at a time. We process with either forward direction or backward direction, but not both simultaneously. That does not mean that we are not considering the reverse complement totally. If it is stated that the read is from forward direction of reference, then there is no need to find it in reverse direction. On the other hand, if it is cut from reverse direction, then there is no need to seek in forward direction. The data set would tell us about the direction, that's why we are omitting reverse complements. 
+
+\end{document}

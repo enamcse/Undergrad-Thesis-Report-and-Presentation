@@ -1,0 +1,529 @@
+\begin{frame}
+	\frametitle{BWT FM-index Approach}
+	This approach also has two versions:
+	\begin{itemize}
+		\item<1-> Naive Approach
+		\item<1-> Enhanced Approach
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{enumerate}
+		\item<1-> Index the Reference Genome
+		\item<1-> Take a Read
+		\item<1-> Take the Next $K$-mer. If There is not Any, Go to Step 9
+		\item<2-> If it is not in the Reference, Go to Step 3
+		\item<2-> Let $i = 1$
+		\item<2-> If $(K+i)$-mer does not Exist, Go to Step 8
+		\item<2-> Do $i = i + 1$ and Go to Step 6.
+		\item<2-> Write the Locations of $(K+i-1)$-mer To the Output and Go to Step 3
+		\item<1-> Exit
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5.13}
+		\newcommand{\arrowStartY}{1.3}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.13,0.7) {\fontsize{200}{200}\selectfont\{};
+		\node[rectangle](refer) at (5.13,0.7) {K-mer from Read};
+		
+		
+		%arrows
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (0.5,\arrowEndY);
+		\draw[line width=2mm,color=red] (0.4,4) -- (0.6,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.3,4) -- (1.5,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (2.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (2.3,4) -- (2.5,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (3.2,\arrowEndY);
+		\draw[line width=2mm,color=red] (3.1,4) -- (3.3,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (4.1,\arrowEndY);
+		\draw[line width=2mm,color=red] (4,4) -- (4.2,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (4.9,\arrowEndY);
+		\draw[line width=2mm,color=red] (4.8,4) -- (5,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (5.7,\arrowEndY);
+		\draw[line width=2mm,color=red] (5.6,4) -- (5.8,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (6.9,\arrowEndY);
+		\draw[line width=2mm,color=red] (6.8,4) -- (7,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (7.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (7.3,4) -- (7.5,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (8.2,\arrowEndY);
+		\draw[line width=2mm,color=red] (8.1,4) -- (8.3,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (9,\arrowEndY);
+		\draw[line width=2mm,color=red] (8.9,4) -- (9.1,4);
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (9.7,\arrowEndY);
+		\draw[line width=2mm,color=red] (9.6,4) -- (9.8,4);
+		%read
+		\node [block] (Val1_1) at (4,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		
+		\end{tikzpicture}
+		\caption{A K-mer with Value $K = K_{min}$ is Picked Up from Read and Indicated Where The K-mer is Found in the Reference.} 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5.15}
+		\newcommand{\arrowStartY}{1.4}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.17,0.8) {\fontsize{112}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (5.1,0.7) {$(K+1)$-mer from Read};
+		
+		
+		%arrows
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.3,4) -- (1.5,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (2.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (2.3,4) -- (2.5,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (3.2,\arrowEndY);
+		\draw[line width=2mm,color=red] (3.1,4) -- (3.3,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (4.9,\arrowEndY);
+		\draw[line width=2mm,color=red] (4.8,4) -- (5,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (6.9,\arrowEndY);
+		\draw[line width=2mm,color=red] (6.8,4) -- (7,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (8.2,\arrowEndY);
+		\draw[line width=2mm,color=red] (8.1,4) -- (8.3,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (9,\arrowEndY);
+		\draw[line width=2mm,color=red] (8.9,4) -- (9.1,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (9.7,\arrowEndY);
+		\draw[line width=2mm,color=red] (9.6,4) -- (9.8,4);
+		
+		%read
+		\node [block] (Val1_1) at (3.75,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\end{tikzpicture}
+		\caption{Extending One Base in $K$-mer, The Locations of $(K+1)$-mer in the Reference is Reduced. } 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5.46}
+		\newcommand{\arrowStartY}{1.5}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.46,0.85) {\fontsize{130}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (5.3,0.7) {$(K+2)$-mer from Read};
+		
+		
+		%arrows
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.2,4) -- (1.5,4);
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (8.2,\arrowEndY);
+		\draw[line width=2mm,color=red] (8,4) -- (8.3,4);
+		
+		
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (9.7,\arrowEndY);
+		\draw[line width=2mm,color=red] (9.5,4) -- (9.8,4);
+		
+		%read
+		\node [block] (Val1_1) at (3.75,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\node [block, anchor=west] (Val1_7) at (Val1_6.east) {A};
+		\end{tikzpicture}
+		\caption{Extending One More Base , The Locations of $(K+2)$-mer in the Reference is Reduced And Now It is Only 3. } 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5}
+		\newcommand{\arrowStartY}{1.65}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5,0.9) {\fontsize{150}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (4.9,0.7) {$(K+3)$-mer from Read};
+		
+		
+		%arrows
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.1,4) -- (1.7,4);
+		
+		
+		%read
+		\node [block] (Val1_1) at (3,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\node [block, anchor=west] (Val1_7) at (Val1_6.east) {A};
+		\node [block, anchor=west] (Val1_8) at (Val1_7.east) {A};
+		\end{tikzpicture}
+		\caption{Continuing the Extension, $(K+3)$-mer is Created. The Count in Reference is Only One. }
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5.3}
+		\newcommand{\arrowStartY}{1.8}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.27,1.05) {\fontsize{170}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (5.15,0.7) {$(K+4)$-mer from Read};
+		
+		
+		%arrows
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.1,4) -- (1.7,4);
+		
+		
+		%read
+		\node [block] (Val1_1) at (3,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\node [block, anchor=west] (Val1_7) at (Val1_6.east) {A};
+		\node [block, anchor=west] (Val1_8) at (Val1_7.east) {A};
+		\node [block, anchor=west] (Val1_9) at (Val1_8.east) {G};
+		\end{tikzpicture}
+		\caption{ $(K+4)$-mer is Made By Appending One Base From Read. It has No Consequence in The Count in Reference. } 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5}
+		\newcommand{\arrowStartY}{1.65}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.35,1.1) {\fontsize{187}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (5.2,0.7) {$(K+5)$-mer from Read};
+		
+		
+		
+		%read
+		\node [block] (Val1_1) at (2.8,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\node [block, anchor=west] (Val1_7) at (Val1_6.east) {A};
+		\node [block, anchor=west] (Val1_8) at (Val1_7.east) {A};
+		\node [block, anchor=west] (Val1_9) at (Val1_8.east) {G};
+		\node [block, anchor=west] (Val1_10) at (Val1_9.east) {C};
+		\end{tikzpicture}
+		\caption{ One Base Extension in $(K+4)$-mer,  There is No Existence of $(K+5)$-mer in Reference. So, the Locations Got From $(K+4)$-mer Would be Considered as Final.} 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Method}
+	\begin{figure}
+		\centering
+		\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+		text centered]
+		\begin{tikzpicture}[]
+		%variables
+		\newcommand{\arrowStartX}{5.3}
+		\newcommand{\arrowStartY}{1.8}
+		\newcommand{\arrowEndY}{3.8}
+		%reference
+		\draw[line width=2mm] (0,4) -- (10,4);
+		%\draw[line width=2mm,color=red] (5,4) -- (6,4);
+		%\draw[line width=2mm,color=red] (6.3,4) -- (7.3,4);
+		
+		%labels
+		\node[rectangle](refer) at (0.8,4.5) {Reference};
+		%\node[rectangle,rotate=-90, ultra thick](refer) at (5.27,1.05) {\fontsize{170}{72.4}\selectfont\{};
+		\node[rectangle](refer) at (5.15,0.7) {$(K+4)$-mer from Read};
+		
+		
+		%arrows
+		
+		\draw[line width=1mm,color=black!50,->] (\arrowStartX,\arrowStartY) -- (1.4,\arrowEndY);
+		\draw[line width=2mm,color=red] (1.1,4) -- (1.7,4);
+		
+		
+		%read
+		\node [block] (Val1_1) at (3,0) {A};
+		\node [block, anchor=west] (Val1_2) at (Val1_1.east) {T};
+		\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+		\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+		\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+		\node [block, anchor=west] (Val1_6) at (Val1_5.east) {C};
+		\node [block, anchor=west] (Val1_7) at (Val1_6.east) {A};
+		\node [block, anchor=west] (Val1_8) at (Val1_7.east) {A};
+		\node [block, anchor=west] (Val1_9) at (Val1_8.east) {G};
+		\end{tikzpicture}
+		\caption{ $(K+4)$-mer is Made By Appending One Base From Read. It has No Consequence in The Count in Reference. } 
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Result}
+		\centering
+		
+		
+		\begin{tikzpicture}
+		\begin{axis}[
+		title={Which Length of K-mer Dominates the Mapping by What Percentage},
+		xlabel={K-mer Length},
+		ylabel={\% of K-mer Length in Map  },
+		xmin=10, xmax=170,
+		ymin=0, ymax=50,
+		xtick={10,30,50,70,90,110,130,150,170},
+		ytick={0,10,20,30,40,50},
+		legend pos=north east,
+		ymajorgrids=true,
+		xmajorgrids=true,
+		grid style=dashed,
+		]
+		
+		\addplot[
+		color=blue,
+		mark=dot,
+		]
+		coordinates {
+			( 14 , 45.91 )( 15 , 16.12 )( 16 , 7.55 )( 17 , 4.77 )( 18 , 3.66 )( 19 , 3.01 )( 20 , 2.56 )( 21 , 2.16 )( 22 , 1.89 )( 23 , 1.63 )( 24 , 1.39 )( 25 , 1.22 )( 26 , 1.04 )( 27 , 0.9 )( 28 , 0.8 )( 29 , 0.68 )( 30 , 0.6 )( 31 , 0.52 )( 32 , 0.44 )( 33 , 0.39 )( 34 , 0.33 )( 35 , 0.29 )( 36 , 0.26 )( 37 , 0.22 )( 38 , 0.2 )( 39 , 0.18 )( 40 , 0.15 )( 41 , 0.13 )( 42 , 0.12 )( 43 , 0.1 )( 44 , 0.09 )( 45 , 0.08 )( 46 , 0.07 )( 47 , 0.06 )( 48 , 0.06 )( 49 , 0.05 )( 50 , 0.04 )( 51 , 0.04 )( 52 , 0.03 )( 53 , 0.03 )( 54 , 0.03 )( 55 , 0.02 )( 56 , 0.02 )( 57 , 0.02 )( 58 , 0.02 )( 59 , 0.01 )( 60 , 0.01 )( 61 , 0.01 )( 62 , 0.01 )( 63 , 0.01 )( 64 , 0.01 )( 65 , 0.01 )( 66 , 0.01 )( 67 , 0.01 )( 68 , 0.0 )( 69 , 0.0 )( 70 , 0.0 )( 71 , 0.0 )( 72 , 0.0 )( 73 , 0.0 )( 74 , 0.0 )( 75 , 0.0 )( 76 , 0.0 )( 77 , 0.0 )( 78 , 0.0 )( 79 , 0.0 )( 80 , 0.0 )( 81 , 0.0 )( 82 , 0.0 )( 83 , 0.0 )( 84 , 0.0 )( 85 , 0.0 )( 86 , 0.0 )( 87 , 0.0 )( 88 , 0.0 )( 89 , 0.0 )( 90 , 0.0 )( 91 , 0.0 )( 92 , 0.0 )( 93 , 0.0 )( 94 , 0.0 )( 95 , 0.0 )( 96 , 0.0 )( 97 , 0.0 )( 98 , 0.0 )( 99 , 0.0 )( 100 , 0.0 )( 101 , 0.0 )( 103 , 0.0 )( 104 , 0.0 )( 105 , 0.0 )( 108 , 0.0 )( 109 , 0.0 )( 111 , 0.0 )( 113 , 0.0 )( 116 , 0.0 )( 117 , 0.0 )( 122 , 0.0 )( 126 , 0.0 )( 127 , 0.0 )( 128 , 0.0 )( 129 , 0.0 )( 139 , 0.0 )( 140 , 0.0 )( 142 , 0.0 )( 148 , 0.0 )
+		};
+		\addlegendentry{20K Simulated Reads}
+		\addplot[
+		color=red,
+		mark=dot,
+		]
+		coordinates {
+			( 14 , 46.31 )( 15 , 15.69 )( 16 , 6.78 )( 17 , 4.06 )( 18 , 3.06 )( 19 , 2.56 )( 20 , 2.24 )( 21 , 1.98 )( 22 , 1.75 )( 23 , 1.58 )( 24 , 1.41 )( 25 , 1.25 )( 26 , 1.13 )( 27 , 1.01 )( 28 , 0.91 )( 29 , 0.81 )( 30 , 0.73 )( 31 , 0.66 )( 32 , 0.59 )( 33 , 0.53 )( 34 , 0.48 )( 35 , 0.43 )( 36 , 0.38 )( 37 , 0.35 )( 38 , 0.31 )( 39 , 0.28 )( 40 , 0.26 )( 41 , 0.23 )( 42 , 0.21 )( 43 , 0.19 )( 44 , 0.17 )( 45 , 0.16 )( 46 , 0.14 )( 47 , 0.12 )( 48 , 0.11 )( 49 , 0.1 )( 50 , 0.1 )( 51 , 0.09 )( 52 , 0.08 )( 53 , 0.07 )( 54 , 0.07 )( 55 , 0.06 )( 56 , 0.05 )( 57 , 0.05 )( 58 , 0.04 )( 59 , 0.04 )( 60 , 0.03 )( 61 , 0.03 )( 62 , 0.03 )( 63 , 0.03 )( 64 , 0.02 )( 65 , 0.02 )( 66 , 0.02 )( 67 , 0.02 )( 68 , 0.02 )( 69 , 0.01 )( 70 , 0.01 )( 71 , 0.01 )( 72 , 0.01 )( 73 , 0.01 )( 74 , 0.01 )( 75 , 0.01 )( 76 , 0.01 )( 77 , 0.01 )( 78 , 0.01 )( 79 , 0.01 )( 80 , 0.01 )( 81 , 0.0 )( 82 , 0.0 )( 83 , 0.0 )( 84 , 0.0 )( 85 , 0.0 )( 86 , 0.0 )( 87 , 0.0 )( 88 , 0.0 )( 89 , 0.0 )( 90 , 0.0 )( 91 , 0.0 )( 92 , 0.0 )( 93 , 0.0 )( 94 , 0.0 )( 95 , 0.0 )( 96 , 0.0 )( 97 , 0.0 )( 98 , 0.0 )( 99 , 0.0 )( 100 , 0.0 )( 101 , 0.0 )( 102 , 0.0 )( 103 , 0.0 )( 104 , 0.0 )( 105 , 0.0 )( 106 , 0.0 )( 107 , 0.0 )( 108 , 0.0 )( 109 , 0.0 )( 110 , 0.0 )( 111 , 0.0 )( 112 , 0.0 )( 113 , 0.0 )( 114 , 0.0 )( 115 , 0.0 )( 116 , 0.0 )( 117 , 0.0 )( 118 , 0.0 )( 119 , 0.0 )( 120 , 0.0 )( 121 , 0.0 )( 122 , 0.0 )( 123 , 0.0 )( 124 , 0.0 )( 125 , 0.0 )( 126 , 0.0 )( 127 , 0.0 )( 128 , 0.0 )( 129 , 0.0 )( 130 , 0.0 )( 131 , 0.0 )( 132 , 0.0 )( 133 , 0.0 )( 134 , 0.0 )( 135 , 0.0 )( 136 , 0.0 )( 137 , 0.0 )( 138 , 0.0 )( 141 , 0.0 )( 143 , 0.0 )( 144 , 0.0 )( 147 , 0.0 )( 148 , 0.0 )( 152 , 0.0 )( 155 , 0.0 )
+		};
+		\addlegendentry{25K Reads}
+		\addplot[
+		color=black,
+		mark=square,
+		]
+		coordinates {
+			( 10000 , 100.0 )
+		};
+		\addlegendentry{Synthetic Reads}
+		\end{axis}
+		\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Result}
+	\centering
+	
+	
+	\begin{tikzpicture}
+	\begin{axis}[
+	title={\# of Locations Where the Final K-mers are Found VS Their Percentage},
+	xlabel={\# of Final Locations},
+	ylabel={\% of Count of Location in Map  },
+	xmin=0, xmax=20,
+	ymin=0, ymax=100,
+	xtick={0,5,10,15,20},
+	ytick={0,10,20,30,40,50,60,70,80,90,100},
+	legend pos=north east,
+	ymajorgrids=true,
+	xmajorgrids=true,
+	grid style=dashed,
+	]
+	
+	\addplot[
+	color=blue,
+	mark=dot,
+	]
+	coordinates {
+		( 1 , 97.32 )( 2 , 1.61 )( 3 , 0.43 )( 4 , 0.18 )( 5 , 0.32 )( 6 , 0.01 )( 7 , 0.01 )( 8 , 0.07 )( 9 , 0.04 )( 10 , 0.0 )( 11 , 0.0 )( 12 , 0.0 )( 13 , 0.0 )( 14 , 0.0 )( 16 , 0.0 )( 17 , 0.0 )( 18 , 0.0 )( 19 , 0.0 )
+	};
+	\addlegendentry{20K Simulated Reads}
+	\addplot[
+	color=red,
+	mark=dot,
+	]
+	coordinates {
+		( 1 , 96.62 )( 2 , 2.16 )( 3 , 0.53 )( 4 , 0.22 )( 5 , 0.32 )( 6 , 0.01 )( 7 , 0.01 )( 8 , 0.08 )( 9 , 0.04 )( 10 , 0.0 )( 11 , 0.0 )( 12 , 0.0 )( 13 , 0.0 )( 14 , 0.0 )( 15 , 0.0 )( 16 , 0.0 )( 17 , 0.0 )( 18 , 0.0 )( 19 , 0.0 )( 20 , 0.0 )
+	};
+	\addlegendentry{25K Reads}
+	\addplot[
+	color=black,
+	mark=square,
+	]
+	coordinates {
+		( 1 , 100.0 )
+	};
+	\addlegendentry{Synthetic Reads}
+	\end{axis}
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach : Naive vs Enhanced}
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}[
+	title={Exec. Time Comparison Between Naive vs Enhanced FM-index Approach},
+	xlabel={Number of reads (X100)},
+	ylabel={Execution Time (X1K Seconds) },
+	xmin=0, xmax=260,
+	ymin=0, ymax=12,
+	xtick={0,50,100,150,200,250},
+	ytick={0,3,6,9,12},
+	legend pos=north west,
+	ymajorgrids=true,
+	xmajorgrids=true,
+	grid style=dashed,
+	]
+	
+	\addplot[
+	color=blue,
+	mark=square,
+	]
+	coordinates {
+		( 0.50 , 5.629 )(200, 6.234)(259.70, 11.271)
+	};
+	\addlegendentry{Naive FM-index}
+	\addplot[
+	color=red,
+	mark=square,
+	]
+	coordinates {
+		(0.50 , 0.001167 )(200.00, 5.522)(259.70, 9.910)
+	};
+	\addlegendentry{Enhanced FM-index}
+	\end{axis}
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+	\frametitle{BWT FM-index Approach vs Minimap}
+	\centering
+	\begin{tikzpicture}
+	\begin{axis}[
+	title={Memory Requirement for Indexing: FM-index Approach vs Minimap},
+	xlabel={Reference Length (X10K)},
+	ylabel={Memory Consumption (in MB) },
+	xmin=40, xmax=470,
+	ymin=0, ymax=15,
+	xtick={50,150,250,350,450},
+	ytick={0,3,6,9,12,15},
+	legend pos=north west,
+	ymajorgrids=true,
+	xmajorgrids=true,
+	grid style=dashed,
+	]
+	
+	\addplot[
+	color=blue,
+	mark=square,
+	]
+	coordinates {
+		(49.33 , 0.25 )(463.92, 2.31)
+	};
+	\addlegendentry{FM-index}
+	\addplot[
+	color=red,
+	mark=square,
+	]
+	coordinates {
+		(49.33 , 1.6 )(463.92, 13.9)
+	};
+	\addlegendentry{Minimap}
+	\end{axis}
+	\end{tikzpicture}
+\end{frame}

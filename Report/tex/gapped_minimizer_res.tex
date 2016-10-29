@@ -1,0 +1,47 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Experiment with gapped Minimizer and result}
+For this experiment we used Escherichia coli K-12 MG1655 complete genome (version U00096.1) as the reference sequence. For read sequence we used three dataset.
+	\begin{enumerate}
+		\item 20K simulated reads having average read length 7K bases
+		\item Above 25K PacBio reads having average read length 8K bases
+		\item Our generated 50 synthetic reads cut  from synthetic reference having read length exactly 10K bases
+	\end{enumerate}
+From the 20K simulated reads have a name format like below
+\begin{verbatim}
+>Ecoli_1372212_aligned_3035_F_1_13638_30
+\end{verbatim}
+Here the number 1372212 means this read was cut from the reference from position  1372212 having a length of 13638.
+\par 
+As we have ran our methods as mentioned in the methodology section in the 20K simulate read and with afore mentioned reference genome sequence we got results like blow
+\begin{verbatim}
+Ecoli_2753889_aligned_2957_R_26_6442_7
+2753915 2760130 843
+2136
+Ecoli_3378975_aligned_2958_R_77_3044_22
+3379052 3382182 409
+1083
+Ecoli_2567494_aligned_2959_F_0_3196_11
+2567494 2570603 422
+1143
+\end{verbatim}
+Here for each read we see two lines are printed. The first line contains three space separated integers. The three numbers significance are
+\begin{enumerate}
+	\item First number means start index of the read in the reference
+	\item Second number means end index of the read in the reference
+	\item Third number means count of minimizers found between start and end in the reference.
+\end{enumerate}
+In the second line the integers means the total number of {\bf \emph{K}}-mer of the read found as minimizer in the whole reference.
+For our experiment purpose we only considered the read that were aligned as described in their read name. After generating results from all aligned reads we found the ration of  the total number of {\bf \emph{K}}-mer of the read found as minimizer in the whole reference to the count of minimizers found between start and end in the reference is 2 to 3. Which meets our second assumption described in the methodology section.
+Before doing all these experiment we had to generate the minimizer index both for forward reference and the reverse compliment of the reference. The result of minimizer count is shown below
+\begin{verbatim}
+Reference Length: 4639211
+Time needed to compute all minimizers of Reference : 0.451064
+Number of Unique Minimizers:
+Forward: 341184
+Reverse: 341062
+\end{verbatim}
+From this result we can figure out that on average after every 13 consecutive {\bf \emph{W}}=24 mers we get a new minimizer. Which also meet our first assumption.
+\end{document}

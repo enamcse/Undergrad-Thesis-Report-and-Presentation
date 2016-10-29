@@ -1,0 +1,77 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\section{Efficient Window Traversing Technique}
+	In general finding minimizer of length {\bf \emph{K}} of every {\bf \emph{W}} window a genome/read sequence would take a lot of time if it is done with polynomial complexity as well as if the sequence is very long. But the brighter side is we have done the whole process of finding minimizer of {\bf \emph{K}} of every {\bf \emph{W}} window of the reference sequence with a overall linear complexity. That helped our over all complexity of this tool boost up a lot.
+	% Here goes the Algorithm
+	\begin{breakablealgorithm}
+		\caption{Indexing All Minimizers in Reference Running a Window of Length W in $O(n)$ }
+		\label{alg:mini_algo}
+		\begin{algorithmic}[1]
+			\Require $S$ is the reference sequence, $W$ is window size and $K$ is the length of K-mer to work with the window. 
+			\Ensure An Unordered Map of \verb|int| to \verb|boolean| where every integer represents a K-mer and the \verb|boolean| value expresses it is in the reference as minimizer. All the entries should have this value equal to \verb|true|.
+			\Function{MinimizerIndexing}{$S, W, K$}
+			\Local{$n, i, temps, minimizer, prevmin, sliding\_window$} 
+			\Comment{$sliding\_window$ is a deque data structure of type $my\_data$ which has two integer members $index$ and $minimizer$}
+			\Let{n}{|S|} 
+			\Comment{|s| means length of the string s}
+			\Let{temps, minimizer, prevmin}{$-1$} 
+			\Let{temps}{$Pat2Num(S[0:K])$} 
+			\Comment{\parbox[t]{.4\linewidth}}{\emph{Pat2Num()} function takes a K-mer string and converts it to the corresponding integer and returns.} 
+			\For{$i \leftarrow K$ \textbf{to} $i < n$ and $ i < W$}
+			\If{S[i] not equal to $'\_'$}
+			\Let{temps}{S[i:i+k]}
+			\EndIf
+			\Let{minimizer}{temps}
+			\While{$sliding\_window$ is \textbf{not empty} and $minimizer$ < $sliding\_window.back().minimizer$}
+			\State{sliding\_window.pop\_back()}
+			\EndWhile 
+			\State{sliding\_window.push\_back( \{minimizer, i-K+1\} )}
+			\EndFor 
+			\Let{prevmin}{sliding\_window.front().minimizer} 
+			\For{$i \leftarrow i$ \textbf{to} $i < n$}
+			\If{S[i] not equal to $'\_'$}
+			\Let{temps}{S[i:i+k]}
+			\EndIf
+			\If{S[i-K] not equal to $'\_'$}
+			\textbf{continue}
+			\EndIf
+			\Let{minimizer}{temps}
+			\While{$sliding\_window$ is \textbf{not empty} and $sliding\_window.front().index \leq (i-W)$ }
+			\State{sliding\_window.pop\_front()}
+			\EndWhile
+			\While{$sliding\_window$ is \textbf{not empty} and $minimizer$ < $sliding\_window.back().minimizer$}
+			\State{sliding\_window.pop\_back()}
+			\EndWhile
+			\State{sliding\_window.push\_back( \{minimizer, i-K+1\} )}
+			\If{$sliding\_window.front().minimizer$ not equal to $prevmin$}
+			\If{$Map.count(sliding\_window.front().minimizer) = 0$}
+			\Let{Map[prevmin]}{true}
+			\Let{prevmin}{sliding\_window.front().minimizer}
+			\EndIf
+			\EndIf
+			\EndFor 
+			\If{$Map.count(sliding\_window.front().minimizer) = 0$}
+			\Let{Map[sliding\_window.front().minimizer]}{true}
+			\EndIf
+
+			\State\Return{Map}
+			\EndFunction
+			
+		\end{algorithmic}
+	\end{breakablealgorithm}
+	
+	 
+	% Here ends our beautiful algorithm
+	Using a simple data structure which contained a minimizer as an integer and its position  and a C++ built in Standard Template Library(STL) container deque of that data structure enabled us to do the whole minimizer indexing process in linear time. We basically used a sliding window technique.
+	\par 
+	At first we fill up deque with the first K mer and its position as 0. Then for the first window of W length for each new base we update a temporary minimizer variable. Then we start erasing elements from the back of the deque until that minimizer is greater than our new temporary minimizer. After that we insert this temporary minimizer and it's position in the deque.
+	\par 
+	We set the global minimizer value as the minimizer of the first window which can be obtained from the front of the deque. After for each base of the sequence we take a new temporary minimizer variable containing the K mer considering the current base. Then we keep removing the elements from the deque which are out of the current window by popping from the front of the deque.Then again we start erasing elements from the back of the deque until that minimizer is greater than our new temporary minimizer. After that we insert this temporary minimizer and it's position in the deque.
+	\par
+	From the front of the deque we get the minimizer of the current window. If its different from the previous global minimizer we update the map with the global minimizer and then update the global minimizer with minimizer of the current window.
+	\par
+	Finally after iterating over the whole sequence, the minimizer of the last window will still be unchecked whether it is mapped or not. So we check it and map it if needed. In this whole  process we just iterate over the given string once and for each base the insertion and deletion from the deque along with the insertion in the un-ordered map is ensured as {\bf \emph{O}}(1) in C++. So our overall complexity turns into as a linear one.
+
+\end{document}

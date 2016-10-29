@@ -1,0 +1,11 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\chapter*{Abstract}
+
+There are several modern technologies developed to make the DNA sequencing easier and cheaper. Among them, Oxford Nanopore Technology (ONT) produces the longest read sequences and the lengths of the reads are growing day by day. But the challenge of handling such long read sequences is, the standard of these is very low comparing to other technologies. As error does not come following any specific pattern, it is hard to trace them. Several approaches are taken to defend this challenge.  Tools like NanoBLASTer, GraphMap, BLAST, LAST, BWA-SW, Bowtie are developed to align these sequences. Every tool faced some challenges, but facing the desired challenges introduce some new challenges on the other side. So, no one tool is perfect for every work. NanoBLASTer is a new aligner tool which does a trade off and perform better from different aspects. But the naive mapping portion of this tool lead to skip long insertion or deletion. To minimize this problem along with maximizing the efficiency, a new mapper tool named NanoMapper is developed by us. Mapping is a key part of alignment. If this part could make efficient, then all further steps would be efficient. In NanoMapper, gapped minimizer is introduced as the first step so that it reduce the options of K-mers in the read and in the second step, the result of the query is retrieved using BWT FM-index. The memory requirement of the FM-index is tremendously low. Mapper tool like minimap takes few times more memory to index the whole genome of a reference sequence. There are some other tools which deals with mismatches only and does not play with insertion or deletion. NanoBLASTer as well as those tools are the main target of NanoMapper. It is shown that, it would help the NanoBLASTer and similar tools to align better with long insertions and deletions. NanoMapper is run against the well-known \emph{Escherichia coli (E. coli)} reference sequence and a randomly generated synthetic reference.
+\clearpage
+\paragraph*{Keywords:}  Gapped Minimizer, Mapper, Noisy Read Sequence, Suffix Array, Next Generation Sequencing (NGS), Oxford Nanopore Technology (ONT), Suffix Tree, Suffix Trie, Gapped K-mer, Full-text Minute-space(FM)-index, Burrows-Wheeler Transform (BWT), Variant Calling.
+
+\end{document}

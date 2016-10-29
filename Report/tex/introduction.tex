@@ -1,0 +1,113 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\chapter{Introduction}
+\section{Background}
+A well-formed combination of several billions of human cells is called human being. Several components shape a human. Among these components, nucleus is the most overwhelming and intense part.\cite{cellStructure} As like nucleus in cell, chromosome is the most king like component in nucleus. In the vast majority of the chromosomes, there exists a long two-strand-nucleotide-chain which is called DNA helix. Each strand builds up by consecutive occurrence of only four types of nucleotide named Adenine(A), Guanine(G), Cytosine(C) and Thymine(T). These four nucleotides are often called base and each of them is represented as a one letter symbol given in bracket. A strand in DNA helix is the reverse complement of the other strand if it is seen by fixing a direction. The word \emph{complement} means the compatible base of bonding of a base. The complement of Adenine, Guanine, Cytosine and Thymine are Thymine, Cytosine, Guanine and Adenine respectively. So, if one strand is known, then the other strand is also known. To represent a strand, a long string of A, T, G and C is used in the field of Bioinformatics.
+A sub-string of this long string is called gene, if the corresponding sequence of nucleotides is responsible for any characteristics of the cell owner\cite{controlBehavior}.
+
+Now-a-days, earth knows that for every characteristics of an animal, plant, bacteria or even virus, there is a responsible gene in the cell for that characteristics. Finding out this type of responsible gene needs huge amount of data sequences to study. But sequencing data was very expensive and rare in the time when data reads were collected through Sanger sequencing\cite{sangerSequencing1, sangerSequencing2} or first generation sequencing. 
+
+Next Generation Sequencing (NGS)\cite{nextGenerationSeq} brought a tremendous revolution in the field of Bioinformatics. DNA sequencing was very expensive before this revolution. Extracting information from gene sequences become very cheap\cite{NGScheap} and easy with the next generation sequencing technologies\cite{nextGenerationSeq2}. Raw data are kept as fasta or fastq\cite{fastqFormat} file format. The raw data file consist of short sequences, varying length from 30--60 base pair (bp)\cite{shortSequence} to 3K--20K bp\footnote{Reads could be more than 60K bp long in some cases. More information about read length could be found at: http://www.pacb.com/smrt-science/smrt-sequencing/read-lengths/} each\cite{SMRT1}, taken from the random positions of the whole genome sequence. But the genome sequence of all members of a single species are not same, rather every individual carries different genome than others\cite{bioAlgoPevzner,bioAlgoPevzner2004}. 
+\begin{figure}
+	\centering
+	\tikzstyle{block} = [rectangle, draw, line width=0.5mm,
+	text centered]
+	\tikzstyle{line} = [draw, -latex']
+	\begin{tikzpicture}[auto, node distance = 5mm]
+	%Reference
+	\node [rectangle, minimum width=2cm](lab) at (4.05,0) {Genome 1};
+	\node [block, below of=lab] (Val1_2) at (3.5,0) {T};
+	\node [block, anchor=west] (Val1_3) at (Val1_2.east) {T};
+	\node [block, anchor=west, color=red!80] (Val1_4) at (Val1_3.east) {C};
+	\node [block, anchor=west] (Val1_5) at (Val1_4.east) {G};
+	\node [block, anchor=west] (Val1_6) at (Val1_5.east) {A};
+	\node [block, anchor=west] (Val1_7) at (Val1_6.east) {G};
+	\node [block, anchor=west] (Val1_8) at (Val1_7.east) {C};
+	\node [block, anchor=west, color=red!80] (Val1_9) at (Val1_8.east) {A};
+	\node [block, anchor=west] (Val1_10) at (Val1_9.east) {T};
+	\node [block, anchor=west] (Val1_11) at (Val1_10.east) {C};
+	\node [block, anchor=west] (Val1_12) at (Val1_11.east) {A};
+	\node [block, anchor=west] (Val1_13) at (Val1_12.east) {G};
+	\node [block, anchor=west] (Val1_14) at (Val1_13.east) {T};
+	\node [block, anchor=west] (Val1_15) at (Val1_14.east) {A};
+	
+	\node [rectangle, minimum width=2cm](lab2) at (4.05,-2.6) {Genome 2};
+	%second line
+	\node [block] (Val2_2) at (3.5,-2) {T};
+	\node [block, anchor=west] (Val2_3) at (Val2_2.east) {T};
+	\node [block, anchor=west, color=blue!70,minimum height=5.2mm, minimum width=5mm] (Val2_4) at (Val2_3.east) {A};
+	\node [block, anchor=west] (Val2_5) at (Val2_4.east) {G};
+	\node [block, anchor=west] (Val2_6) at (Val2_5.east) {A};
+	\node [block, anchor=west,minimum height=5.2mm, minimum width=5mm] (Val2_7) at (Val2_6.east) {G};
+	\node [block, anchor=west] (Val2_8) at (Val2_7.east) {C};
+	\node [block, color=blue!70, anchor=west] (Val2_9) at (Val2_8.east) {T};
+	\node [block, anchor=west,minimum height=5.2mm, minimum width=5mm] (Val2_10) at (Val2_9.east) {T};
+	\node [block, anchor=west] (Val2_11) at (Val2_10.east) {C};
+	\node [block, anchor=west] (Val2_12) at (Val2_11.east) {A};
+	\node [block, anchor=west,minimum height=5.2mm, minimum width=5mm] (Val2_13) at (Val2_12.east) {G};
+	\node [block, anchor=west] (Val2_14) at (Val2_13.east) {T};
+	\node [block, anchor=west] (Val2_15) at (Val2_14.east) {A};
+	
+	%arrows
+	\draw[line width=1mm,color=red!50!blue,->] (4.57,-0.8) -- (4.57,-1.7);
+	%\draw[line width=1mm,color=black!70,->] (6.32,-0.8) -- (6.32,-1.7);
+	%\draw[line width=1mm,color=blue!50,->] (8,-0.8) -- (8,-1.7);
+	\draw[line width=1mm,color=red!50!blue,->] (7.5,-0.8) -- (7.5,-1.7);
+	
+	%Reverse Complement of Reference
+	\node [rectangle, minimum width=2cm](lab3) at (4.05,-4) {Genome 1};
+	\node [block, below of=lab3] (Val3_2) at (3.5,-4) {T};
+	\node [block, anchor=west] (Val1_3) at (Val3_2.east) {A};
+	\node [block, anchor=west] (Val1_4) at (Val1_3.east) {C};
+	\node [block, anchor=west] (Val1_5) at (Val1_4.east) {T};
+	\node [block, anchor=west] (Val1_6) at (Val1_5.east) {G};
+	\node [block, anchor=west, color=red!80] (Val1_7) at (Val1_6.east) {A};
+	\node [block, anchor=west, color=red!80] (Val1_8) at (Val1_7.east) {T};
+	\node [block, anchor=west, color=red!80] (Val1_9) at (Val1_8.east) {G};
+	\node [block, anchor=west, color=red!80] (Val1_10) at (Val1_9.east) {C};
+	\node [block, anchor=west, color=red!80] (Val1_11) at (Val1_10.east) {T};
+	\node [block, anchor=west, color=red!80] (Val1_12) at (Val1_11.east) {C};
+	\node [block, anchor=west, color=red!80] (Val1_13) at (Val1_12.east) {G};
+	\node [block, anchor=west] (Val1_14) at (Val1_13.east) {A};
+	\node [block, anchor=west] (Val1_15) at (Val1_14.east) {A};
+	%gapped reverse complement
+	\node [rectangle, minimum width=2cm](lab4) at (4.05,-6.6) {Genome 2};
+	
+	\node [block] (Val4_2) at (3.5,-6) {T};
+	\node [block, anchor=west] (Val2_3) at (Val4_2.east) {A};
+	\node [block, anchor=west, minimum height=5.2mm, minimum width=5mm] (Val2_4) at (Val2_3.east) {C};
+	\node [block, anchor=west] (Val2_5) at (Val2_4.east) {T};
+	\node [block, anchor=west] (Val2_6) at (Val2_5.east) {G};
+	\node [block, color=blue!70, anchor=west, minimum height=5.2mm, minimum width=5mm] (Val2_7) at (Val2_6.east) {G};
+	\node [block, color=blue!70, anchor=west] (Val2_8) at (Val2_7.east) {C};
+	\node [block, color=blue!70, anchor=west] (Val2_9) at (Val2_8.east) {T};
+	\node [block, color=blue!70, anchor=west, minimum height=5.2mm, minimum width=5mm] (Val2_10) at (Val2_9.east) {A};
+	\node [block, color=blue!70, anchor=west] (Val2_11) at (Val2_10.east) {A};
+	\node [block, color=blue!70, anchor=west] (Val2_12) at (Val2_11.east) {T};
+	\node [block, color=blue!70, anchor=west, minimum height=5.2mm, minimum width=5mm] (Val2_13) at (Val2_12.east) {C};
+	\node [block, anchor=west] (Val2_14) at (Val2_13.east) {A};
+	\node [block, anchor=west] (Val2_15) at (Val2_14.east) {A};
+	
+	%arrows
+	\draw[line width=1mm,color=red!50!blue,->] (6.32,-4.8) -- (6.32,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (6.92,-4.8) -- (6.92,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (7.47,-4.8) -- (7.47,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (8,-4.8) -- (8,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (8.6,-4.8) -- (8.6,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (9.17,-4.8) -- (9.17,-5.7);
+	\draw[line width=1mm,color=red!50!blue,->] (9.75,-4.8) -- (9.75,-5.7);
+	
+	\end{tikzpicture}
+	\caption{First one shows random mutations at two positions and Second one shows segment mutation.} \label{fig:mutation}
+\end{figure}
+The difference between two genomes may be very few or may be very large. Based on this difference, some minor to major differences may be noticed in several things like behavior, skin, structure, color etc. Every individual is born with mutation in their 20K gene\cite{mutation1}. Figure \ref{fig:mutation} visualizes mutation clearly. However, identifying the mutations is a big issue for NGS data as the reads are short and repetitive as well as error occurs in reads. To retrieve the original genome sequence from these reads is a challenge. This challenge is faced by doing alignment\cite{mapShortReads} and keeping in a special format called SAM\cite{SAMformat}. 
+
+To avoid repetition, long DNA sequences are needed. Among the existing technologies, Oxford Nanopore Technology (ONT) generates extremely large sequences having no strong opponent. But the only problem is noise. The more data, the more noise. The length of the reads would increase day by day. As petabytes of sequencing data is adding in the databases daily\cite{NCBI}, it would be in no use if the data could not be processed efficiently.  
+
+Alignment is basically done for pointing structural, functional, evolutionary similar portions\cite{alignment}. An important part of alignment is mapping. An alignment software does mapping first, but the concepts are divided into two parts in the recent past in a sense that, if mapping could be efficient, then the next steps of the process would be efficient. That's why efficient mapping technique in terms of memory, time and placement is become a challenging task.
+
+
+
+\end{document}

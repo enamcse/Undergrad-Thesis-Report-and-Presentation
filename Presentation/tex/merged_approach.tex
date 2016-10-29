@@ -1,0 +1,109 @@
+\section{Gapped Minimizer and BWT FM-index Merged Approach}
+
+\begin{frame}
+	\frametitle{Hotchpotch Recipe}
+	\begin{itemize}
+		\item<1-> Minimizer
+		\item<1-> Window Technique
+		\item<2-> Gap Insertion
+		\item<2-> Enhanced BWT FM-index
+	\end{itemize}
+	\pause[3]
+	{
+		\setbeamercolor{block body}{bg=green!10,fg=black}
+		\setbeamercolor{block title}{bg=green!50!black,fg=white}
+		\begin{block}{NanoMapper}
+			A Hot Hotchpotch having All Above Characteristics
+		\end{block}
+	}	
+\end{frame}
+
+\begin{frame}
+	\frametitle{NanoMapper}
+	\begin{figure}
+		\centering
+		\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+		text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+		\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+		text width=5em, text centered, text width=8cm, rounded corners, minimum height=4em]
+		\tikzstyle{line} = [draw, -latex']
+		\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+		minimum height=2em]
+		
+		\begin{tikzpicture}[node distance = 1.8cm, auto]
+		\node [block, minimum width=7cm] (init) {Index the whole reference taking gapped minimizer running a window};
+		\node [block,below of=init] (fm) {Make an FM-index of the whole reference};
+		\node [block,text width=3cm,below of=fm] (read) {Take a read};
+		\node [block,text width=5cm,below of=read] (kmer) {Take a K-mer from the read};
+		
+		\path [line] (init) -- (fm);
+		\path [line] (fm) -- (read);
+		\path [line] (read) -- (kmer);
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{NanoMapper}
+	\begin{figure}
+		\centering
+		\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+		text width=4.5em, text badly centered, node distance=2.5cm, inner sep=0pt]
+		\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+		text width=5em, text centered, text width=8cm, rounded corners]
+		\tikzstyle{line} = [draw, -latex']
+		\tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+		
+		\begin{tikzpicture}[node distance = 1cm, auto]
+		\node [block,text width=5cm] (kmer) {Take a K-mer from the read};
+		\node [block,text width=2cm,below of=kmer] (gap) {Insert Gap};
+		\node [block,text width=4cm,below of=gap,node distance=1.5cm] (map) {Search the K-mer in the index of minimizers of refrence};
+		\node [decision, below of=map] (decide) {Does the K-mer found in the index?};
+		\node [block,node distance = 3.5cm, text width=2cm, left of=decide] (deny) {Shift the postion by one};
+		\node [block,text width=3cm,node distance = 5cm, right of=decide] (store) {Search for the longest non-zero occurance of the K-mer in FM-index and store it};
+		\node [block,node distance=5cm,text width=3cm, right of=gap] (adjust) {Adjust the index accordingly};
+		\node [block, text width=6cm,below of=decide, node distance=2.3cm] (stop) {Stop when no K-mer is remaining};
+		
+		\path [line] (kmer) -- (gap);
+		\path [line] (gap) -- (map);
+		\path [line] (map) -- (decide);
+		\path [line] (decide) --node {Yes} (store);
+		\path [line] (decide) --node {No} (deny);
+		\path [line] (deny) |- (kmer);
+		\path [line] (store) -- (adjust);
+		\path [line] (adjust) |- (kmer);
+		\path [line, dashed] (store) |- (stop);
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
+
+\begin{frame}
+	\frametitle{NanoMapper : Result}
+	\begin{table}[]
+		\centering
+		\caption{Summary of Processing Reference genome}
+		\begin{tabular}{|c|c|c|c|c|c|c|}
+			\hline
+			\textbf{No} & \textbf{\begin{tabular}[c]{@{}c@{}}Reference\\ Name\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Reference\\ Length\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}\# of\\ Minimizer\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Indexing \\ Time\\ (Mini.)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Indexing\\ Time\\ (FM)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Memory\\ Usage \\ (MB)\end{tabular}} \\ \hline \hline
+			1 & E.Coli & 4639211 & 682246 & 0.46 & \textit{1.76} & 1.67 \\ \hline
+			2 & Synthetic & 493290 & 12225 & 0.04 & \textit{0.16} & 0.18 \\ \hline
+		\end{tabular}
+	\end{table}
+\end{frame}
+
+\begin{frame}
+	\frametitle{NanoMapper : Result}
+	\begin{table}[]
+		\centering
+		\caption{Summary of Processing Read Sequences}
+		\begin{tabular}{|c|c|c|c|c|}
+			\hline
+			\textbf{No} & \textbf{Name of Data Set} & \textbf{\begin{tabular}[c]{@{}c@{}}Total Length\\ of Reads\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Time to Map\\ (Naive)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Time to Map\\ (Enhanced)\end{tabular}} \\ \hline \hline
+			1 & \begin{tabular}[c]{@{}c@{}}20K Simulated\\ Reads\end{tabular} & 118335765 & \textit{\begin{tabular}[c]{@{}c@{}}19538.9\\ (5h 26m)\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}17051\\ (4h 44m)\end{tabular}} \\ \hline
+			2 & 25K Reads & 216906558 & \textit{\begin{tabular}[c]{@{}c@{}}9408.94\\ (2h 37m)\end{tabular}} & \textit{\begin{tabular}[c]{@{}c@{}}9869.78\\ (2h 45m)\end{tabular}} \\ \hline
+			3 & Synthetic Reads & 500000 & \textit{\begin{tabular}[c]{@{}c@{}}3867.97\\ (1h 5m)\end{tabular}} & \textit{0.90} \\ \hline
+		\end{tabular}
+	\end{table}
+\end{frame}
+	
+	

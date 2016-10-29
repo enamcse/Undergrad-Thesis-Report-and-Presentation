@@ -1,0 +1,32 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Minimap}
+Minimap\cite{minimap} is a new mapper which is known for efficiently mapping ONT\cite{minimap} and SMRT\cite{minimap} reads. This mapper is claimed to be faster than the existing pipelines. Author of this paper also introduced a new mapping format called pairing mapping format(PAF)\cite{minimap}. The primary purpose of the minimap is to act as a read overlapper but also it can be used as a read-to-genome and genome-to-genome mapper also.
+\par 
+Minimap is greatly influenced  by the works of BLAST\cite{BLAST}, BLAT\cite{BLAT}, DALIGNER\cite{DALIGNER} and MHAP\cite{MHAP}. Minimap used the basic idea of sketch\cite{minimap} like  MHAP but rather than using fully sketch it uses minimizers as a compact representation. It also stores {\bf \emph{k}}-mers in a hash table as used in BLAT and MHAP as well as it uses sorting significantly like DALIGNER.
+\par 
+Minimap can map in four different mode. They are
+\begin{enumerate}
+	\item Map two list of long sequences
+	\item All-vs-All read self mapping (That is later used for miniasm\cite{minimap})
+	\item Prebuild index before mapping and then map
+	\item Map any genome sequence against itself
+\end{enumerate}
+Minimap does all this mapping basically in three steps. They are
+\begin{description}
+	\item [First] computing the minimizers
+	\item [Secondly] indexing the minimizers properly
+	\item [Finally] Mapping provided the two sequences.
+\end{description}
+Minimap generally generates a file in PAF format. Details of the format can be obtained from the cited papers above. For our purpose we ran then Minimap with our test sequences in the first mode that is listed above. The we extracted information from the PAF file to compare our results with it. Results are shown in comparison section.
+
+Minimap is comparatively faster and new tool. But we are not going to discuss it more because of the reasons below.
+
+\begin{enumerate}
+	\item The author himself declared that the tool is not tested properly yet and it needs a lot of testing.
+	\item It is basically tweaked for its assembly tool miniasm\cite{minimap}.
+	\item The tool is multi-threaded and our tool is not yet ready to process thing parallel.
+\end{enumerate}
+\end{document}

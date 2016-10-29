@@ -1,0 +1,14 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{NanoBLASTer}
+NanoBLASTer\cite{nanoBLAST} is a new tool that does the alignment work. The target of this tool is ONT's MinION technologies which generate long noisy reads.  This work is the main base of our work as it targets noisy reads like us. It aligns faster than GraphMap\cite{GraphMap} and have higher sensitivity than LAST\cite{LAST}, BLAST\cite{BLAST} and BWA-MEM\cite{BWA_MEM}.
+\par 
+NanoBLASTer has introduced many smart and elegant enhancements to hold higher sensitivity and performance while reads have higher error rates. The basic underlying technique of this tool is mainly "seed-and-extend" technique. Inspired by BLAST\cite{BLAST} this tool also uses a technique that is called fixed size exact matching seeds that is then enhanced by a dynamic programming based extension mechanism.
+\par 
+As this tool is specifically designed for MinION\cite{minion} reads and because such reads can have 10\% to 40\% base error rate\cite{minionError1,minionError2}, before extension of the seeds NanoBLASTer uses one-dimensional clustering technique to find out longer high scoring segments dubbed as alignment anchors. Those anchors are then scored against their length and similarity and top prioritized anchors are extended into a proper length alignments using a block-wise dynamic programming approach.
+\par 
+As experiments and results are shown in NanoBLASTer\cite{nanoBLAST} paper. It can be observed that NanoBLASTer is faster than BLAST, BWA-MEM, and GraphMap. And in regards of specificity NanoBLASTer is many greater than GraphMap. Besides all these there can be improvements done on NanoBLASTer in regards of memory efficiency. 
+ 
+\end{document}

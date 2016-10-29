@@ -1,0 +1,21 @@
+\documentclass{standalone}
+\usepackage{standalone}
+
+\begin{document}
+\subsection{Gene Expression}
+Basically Gene expression is the physical method in which information from a gene is used in the synthesis of a operational gene product. These outcome products are mostly proteins, but in the non-protein coding genes such as transfer RNA (tRNA) or smaller nuclear RNA (snRNA) genes, the operational product is a functional RNA.
+\par
+So for the greater understanding of genetic information measuring gene expression level in any particular species or in any particular individual is very important. For finding gene expression level one need to find the number of reads at different genes or target loci of the reference genome.These count of reads to each gene are then used to estimate expression levels.
+\par 
+There are many usage of gene expression in human genetics. Some of are listed below.
+\begin{enumerate}
+	\item Classification of human tumors according to the gene level.\cite{geneC}
+	\item Proper analysis and profiling of breast cancer.\cite{geneB}
+	\item Ontological analysis for proper biological interpretation for gnomic data and results.\cite{geneO}
+	\item Proper sub classification of cancer like Myeloid Leukemia .\cite{geneL}  
+\end{enumerate}
+\par 
+From the above list we can guess how important is to measure the gene expression level in any particular species or individual. And most of the commonly used gene expression measuring tools need to align the read sequences short/long to a particular reference genome sequence. And we know that alignment is dependent on how well the reads are mapped to the reference genome sequence. From the alignment information later count of reads mapped into a particular gene or target loci of the reference genome is the extracted to analyze and estimate the gene expression level for that particular individual.
+\par 
+So proper alignment technique is important for reads those are considered as long reads as well as long reads with higher error rates than short reads.  Besides this for long reads with a higher error rates like 11\% to 15\%, mapping is more challenging. Our goal is to develop a more accurate mapping tool for long reads with higher error rates like PacBio\cite{geneP} sequence reads. 
+\end{document}
