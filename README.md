@@ -1,37 +1,37 @@
-#Undergraduate Thesis
-##Title:
+# Undergraduate Thesis
+## Title:
 NanoMapper: An Efficient Read Mapping Algorithm
 Using Gapped Minimizer and FM-indexing for Oxford
 Nanopore Long Noisy Reads
 
-##Compilation
-###Report:
+## Compilation
+### Report:
 To compile the report, give the following commands in the terminal staying in the current directory:
 
     cd Report
     pdflatex reportMain.tex
     cd ..
   
-###Presentation Slides:
+### Presentation Slides:
 To compile the presentation slides, give the following commands in the terminal staying in the current directory:
 
     cd Presentation
     pdflatex 2011331051_2011331063.tex
     cd ..
-##Special Thanks to:
+## Special Thanks to:
 
 - <h3>Mohammad Ruhul Amin</h3>
 Assistant Professor,<br>
 CSE, SUST
 
-##Supervisor:
+## Supervisor:
 
 - <h3>Eamin Rahman</h3>
 Assistant Professor,<br>
 CSE, SUST
 
 
-##Students Information:
+## Students Information:
 
 - <h3>Enamul Hassan</h3>
 Reg no: 2011331051,<br>
